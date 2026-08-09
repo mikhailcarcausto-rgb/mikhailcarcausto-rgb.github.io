@@ -15,14 +15,15 @@
     emailUser: "mikhail.carcausto",
     emailHost: "gmail.com",
 
-    // Digits only, country code first. Peru = 51. Example: "51987654321"
-    whatsapp: "",
+    // Digits only, country code first. Peru = 51.
+    whatsapp: "51924298403",
 
-    // Full profile URL. Example: "https://www.linkedin.com/in/mikhail-carcausto"
-    linkedin: "",
+    // Full profile URL.
+    linkedin: "https://www.linkedin.com/in/mikhail-carcausto",
 
-    // Display + dial format. Example: "+51 987 654 321"
-    phone: ""
+    // Display + dial format. Same line as WhatsApp — set to "" to drop the
+    // click-to-call row and leave only WhatsApp.
+    phone: "+51 924 298 403"
   };
 
   var EMAIL = CONTACT.emailUser + "@" + CONTACT.emailHost;

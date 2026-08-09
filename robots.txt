@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mikhailcarcausto-rgb.github.io/sitemap.xml

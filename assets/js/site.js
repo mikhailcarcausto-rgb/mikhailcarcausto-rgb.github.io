@@ -307,6 +307,19 @@
     revealed.forEach(function (el) { revObs.observe(el); });
   }
 
+  /* ─────────────────────────────────────────────────────────
+     8 · NAV OVERFLOW
+     On narrow phones the nav row can outgrow the screen. Mark
+     it so the edge fades — a clipped word reads as a bug, a
+     faded edge reads as "there's more, swipe".
+     ───────────────────────────────────────────────────────── */
+  var nav = document.querySelector(".hdr__nav");
+  function checkNav() {
+    if (nav) nav.classList.toggle("is-scrollable", nav.scrollWidth > nav.clientWidth + 1);
+  }
+  window.addEventListener("resize", checkNav);
+
   /* ─── go ─── */
   setLang(guess);
+  checkNav();
 })();

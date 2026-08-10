@@ -270,7 +270,7 @@
   /* ─────────────────────────────────────────────────────────
      7 · SCROLL: depth rail + reveals
      ───────────────────────────────────────────────────────── */
-  var sections = ["audiencias", "servicios", "casos", "metodo", "sobre", "contacto"];
+  var sections = ["audiencias", "trayectoria", "servicios", "casos", "metodo", "sobre", "contacto"];
   var marks = {};
   document.querySelectorAll(".rail__marks li").forEach(function (li) {
     marks[li.dataset.target] = li;
@@ -292,7 +292,8 @@
     });
 
     var revealed = document.querySelectorAll(
-      ".sec__head, .side, .stratum, .case, .steps li, .about__txt, .about__stack, .req, .direct"
+      ".sec__head, .claims__grid li, .side, .track li, .filters, .stratum, .case, " +
+      ".steps li, .about__txt, .creds, .req, .direct"
     );
     revealed.forEach(function (el, i) {
       el.classList.add("rv");
@@ -309,7 +310,26 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     8 · NAV OVERFLOW
+     8 · SERVICE FILTER
+     Two audiences share one list, so let each visitor narrow it
+     to their own side. Items tagged "both" always stay visible.
+     ───────────────────────────────────────────────────────── */
+  var filterBtns = document.querySelectorAll(".filters button");
+  var strata = document.querySelectorAll(".stratum");
+
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var want = btn.dataset.filter;
+      filterBtns.forEach(function (b) { b.classList.toggle("is-on", b === btn); });
+      strata.forEach(function (li) {
+        var f = li.dataset.for;
+        li.hidden = !(want === "all" || f === want || f === "both");
+      });
+    });
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     9 · NAV OVERFLOW
      On narrow phones the nav row can outgrow the screen. Mark
      it so the edge fades — a clipped word reads as a bug, a
      faded edge reads as "there's more, swipe".

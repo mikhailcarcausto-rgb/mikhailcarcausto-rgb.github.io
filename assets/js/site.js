@@ -211,7 +211,10 @@
     else if (urgency === "quarter") priority = party === "mining" ? "A" : "B";
     else if (party === "mining") priority = "B";
 
-    var side = party === "mining" ? "MINERA" : party === "supplier" ? "PROVEEDOR" : "OTRO";
+    var side = party === "mining" ? "MINERA"
+             : party === "supplier" ? "PROVEEDOR"
+             : party === "pro" ? "MENTORIA"
+             : "OTRO";
     return { priority: priority, tag: "[" + priority + "·" + side + "]" };
   }
 
@@ -325,11 +328,6 @@
     b.addEventListener("click", function () { applyFilter(b.dataset.filter); });
   });
 
-  /* The two audience cards deep-link into their own slice of the list. */
-  document.querySelectorAll("[data-filter-go]").forEach(function (a) {
-    a.addEventListener("click", function () { applyFilter(a.dataset.filterGo); });
-  });
-
   /* ─────────────────────────────────────────────────────────
      10 · NAV OVERFLOW
      A clipped word reads as a bug; a faded edge reads as "swipe".
@@ -360,6 +358,93 @@
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
     revealed.forEach(function (el) { obs.observe(el); });
+
+    var nums = document.querySelectorAll("[data-count]");
+    var numObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { countUp(en.target); numObs.unobserve(en.target); }
+      });
+    }, { threshold: 0.6 });
+    nums.forEach(function (el) { numObs.observe(el); });
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     12 · COUNTERS
+     The headline figures count up once, when they scroll into
+     view. Numbers that arrive rather than sit there read as a
+     live system instead of a static brochure.
+     ───────────────────────────────────────────────────────── */
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function countUp(el) {
+    var target = parseFloat(el.dataset.count);
+    var pre = el.dataset.pre || "";
+    var suf = el.dataset.suf || "";
+    if (reduce || !isFinite(target)) return;
+
+    var final = pre + target + suf;
+    var dur = 1100, t0 = null, done = false;
+
+    function land() {                               // always end on the real number
+      if (done) return;
+      done = true;
+      el.textContent = final;
+    }
+
+    function step(t) {
+      if (done) return;
+      if (t0 === null) t0 = t;
+      var k = Math.min((t - t0) / dur, 1);
+      var eased = 1 - Math.pow(1 - k, 3);           // ease-out cubic
+      el.textContent = pre + Math.round(target * eased) + suf;
+      if (k < 1) requestAnimationFrame(step);
+      else land();
+    }
+
+    /* A throttled tab can stop delivering animation frames mid-count, which
+       would strand the headline figure at 0. The timer guarantees the final
+       value lands whether or not the frames ever arrive. */
+    setTimeout(land, dur + 150);
+    requestAnimationFrame(step);
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     13 · POINTER-TRACKED CARD GLOW
+     The radial highlight follows the cursor across each card.
+     Purely decorative, so it is skipped for reduced motion and
+     on touch pointers where there is no cursor to follow.
+     ───────────────────────────────────────────────────────── */
+  var fine = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+  if (fine && !reduce) {
+    document.querySelectorAll(".card").forEach(function (c) {
+      c.addEventListener("pointermove", function (e) {
+        var r = c.getBoundingClientRect();
+        c.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
+        c.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
+      });
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     14 · HERO PARALLAX
+     The pit drifts slightly slower than the page. rAF-throttled
+     so the scroll handler never does layout work directly.
+     ───────────────────────────────────────────────────────── */
+  /* Drive the inner <svg>, not .hero__art: that wrapper carries the entry
+     animation, and an animation with fill-mode "both" keeps its final
+     keyframe (transform:none) winning over any inline transform forever. */
+  var art = document.querySelector(".pit");
+  if (art && !reduce) {
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY;
+        if (y < 900) art.style.transform = "translate3d(0," + (y * -0.055).toFixed(1) + "px,0)";
+        ticking = false;
+      });
+    }, { passive: true });
   }
 
   /* ─── go ─── */

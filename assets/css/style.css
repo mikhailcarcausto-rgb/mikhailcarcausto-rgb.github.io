@@ -175,32 +175,6 @@ a{color:inherit}
 }
 .sec__lead{margin:16px auto 0;font-size:clamp(15px,1.1vw,17px);color:var(--bone-2);max-width:56ch}
 
-/* ── audiences ──────────────────────────────────────────── */
-.split{display:grid;gap:clamp(18px,2.2vw,26px)}
-@media (min-width:880px){.split{grid-template-columns:1fr 1fr}}
-.side{
-  position:relative;padding:clamp(26px,3vw,38px);
-  border:1px solid var(--hair-2);background:var(--surface);
-  transition:transform .35s cubic-bezier(.2,.8,.3,1),border-color .35s;
-}
-.side:hover{transform:translateY(-4px)}
-.side--a{color:var(--copper)}
-.side--a:hover{border-color:rgba(200,106,50,.4)}
-.side--b{color:var(--verdigris)}
-.side--b:hover{border-color:rgba(95,168,140,.4)}
-.side__ico{width:44px;height:44px;display:block;margin-bottom:18px}
-.side__tag{font:500 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase}
-.side h3{margin:12px 0 0;color:var(--bone);font-family:var(--f-disp);font-weight:600;font-size:clamp(21px,2.2vw,27px);line-height:1.1;letter-spacing:-.022em}
-.pains{list-style:none;margin:20px 0 0;padding:0}
-.pains li{position:relative;padding-left:22px;margin-bottom:12px;color:var(--bone-2);font-size:15px}
-.pains li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;background:currentColor;transform:rotate(45deg)}
-.pains li:last-child{margin-bottom:0}
-.side__go{
-  display:inline-block;margin-top:22px;text-decoration:none;color:currentColor;
-  font:500 12px/1 var(--f-mono);letter-spacing:.07em;transition:gap .25s,opacity .25s;
-}
-.side__go:hover{opacity:.75}
-
 /* ── service cards ──────────────────────────────────────── */
 .filters{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:0 0 clamp(26px,3vw,38px)}
 .filters button{
@@ -381,3 +355,155 @@ a{color:inherit}
   .case__res{grid-template-columns:1fr 1fr}
 }
 @media (max-width:400px){.hdr__nav{gap:12px}.hdr__nav a{font-size:12px}}
+
+/* ═══ technical layer ═══════════════════════════════════════
+   Added for the "more technological" pass: a surveyed mesh over
+   the hero, the production pipeline, a real run log, and the
+   mentoring band in verdigris so the third audience reads as a
+   different offer rather than more of the same.
+   ═════════════════════════════════════════════════════════ */
+
+/* surveyed mesh behind the hero */
+.hero__mesh{
+  position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    linear-gradient(rgba(237,231,220,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(237,231,220,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(90% 70% at 50% 34%,#000 20%,transparent 78%);
+  -webkit-mask-image:radial-gradient(90% 70% at 50% 34%,#000 20%,transparent 78%);
+}
+/* the survey polyline traces itself once the art is in view */
+.survey path{stroke-dasharray:4 7;animation:trace 9s linear infinite}
+@keyframes trace{to{stroke-dashoffset:-110}}
+.survey circle{fill:#0C100F}
+
+/* ── pipeline ───────────────────────────────────────────── */
+.pipe{
+  list-style:none;margin:0 0 clamp(26px,3vw,40px);padding:0;
+  display:grid;gap:1px;background:var(--hair-2);border:1px solid var(--hair-2);
+}
+@media (min-width:760px){.pipe{grid-template-columns:repeat(4,1fr)}}
+.pipe li{
+  position:relative;background:var(--basalt);padding:clamp(20px,2.3vw,26px);
+  transition:background .35s;
+}
+.pipe li:hover{background:var(--surface)}
+/* flow arrow between stages */
+@media (min-width:760px){
+  .pipe li:not(:last-child)::after{
+    content:"";position:absolute;right:-5px;top:50%;z-index:2;
+    width:9px;height:9px;margin-top:-4.5px;transform:rotate(45deg);
+    border-top:1px solid var(--copper);border-right:1px solid var(--copper);
+    background:var(--basalt);
+  }
+}
+.pipe__n{
+  display:block;font:400 10px/1 var(--f-mono);letter-spacing:.18em;color:var(--copper);
+  margin-bottom:13px;
+}
+.pipe b{display:block;font:600 18px/1.15 var(--f-disp);letter-spacing:-.018em;color:var(--bone)}
+.pipe em{
+  display:block;margin-top:8px;font-style:normal;
+  font-size:13.8px;line-height:1.55;color:var(--bone-2);
+}
+.pipe code{
+  display:inline-block;margin-top:14px;
+  font:400 10.5px/1 var(--f-mono);letter-spacing:.06em;color:var(--verdigris);
+  border:1px solid rgba(95,168,140,.3);padding:5px 8px;
+}
+
+/* ── run log + stack ────────────────────────────────────── */
+.tech{display:grid;gap:clamp(18px,2.2vw,26px)}
+@media (min-width:900px){.tech{grid-template-columns:1.35fr .65fr;align-items:start}}
+.term{border:1px solid var(--hair);background:#080B0A;overflow:hidden}
+.term__bar{
+  display:flex;align-items:center;gap:7px;padding:11px 14px;
+  background:var(--surface-2);border-bottom:1px solid var(--hair-2);
+}
+.term__bar span{width:9px;height:9px;border-radius:50%;background:#2E3935}
+.term__bar span:first-child{background:#C4553F}
+.term__bar i{
+  margin-left:auto;font:400 10px/1 var(--f-mono);font-style:normal;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--mute);
+}
+.term__body{
+  margin:0;padding:clamp(16px,2vw,22px);overflow-x:auto;
+  font:400 12.6px/1.95 var(--f-mono);color:var(--bone-2);
+}
+.term__body code{font:inherit}
+.term .c1{color:var(--copper)}
+.term .ok{color:var(--verdigris)}
+.term .d{color:var(--mute)}
+.term .hl{color:var(--copper-lt)}
+
+.stack{border:1px solid var(--hair-2);background:var(--basalt);padding:clamp(22px,2.4vw,28px)}
+.stack h3{
+  margin:0 0 12px;font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--copper);
+}
+.stack p{margin:0 0 18px;font-size:14px;line-height:1.6;color:var(--bone-2)}
+.stack ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0}
+.stack li{
+  border:1px solid var(--hair);padding:6px 10px;
+  font:400 10.5px/1 var(--f-mono);color:var(--bone-2);letter-spacing:.04em;
+  transition:border-color .25s,color .25s;
+}
+.stack li:hover{border-color:var(--copper);color:var(--bone)}
+
+/* ── mentoring band ─────────────────────────────────────── */
+.sec--mentor{
+  background:
+    radial-gradient(70% 60% at 18% 10%,rgba(95,168,140,.11),transparent 62%),
+    var(--basalt);
+  border-block:1px solid var(--hair-2);
+}
+.sec--mentor .sec__n{color:var(--verdigris)}
+.mentor{display:grid;gap:clamp(24px,3vw,40px)}
+@media (min-width:940px){.mentor{grid-template-columns:.8fr 1.2fr;align-items:start}}
+.mentor__who h3{
+  margin:0 0 16px;font:500 10.5px/1 var(--f-mono);letter-spacing:.16em;
+  text-transform:uppercase;color:var(--verdigris);
+}
+.mentor__who ul{list-style:none;margin:0;padding:0}
+.mentor__who li{
+  position:relative;padding-left:22px;margin-bottom:14px;
+  color:var(--bone-2);font-size:15px;line-height:1.55;
+}
+.mentor__who li::before{
+  content:"";position:absolute;left:0;top:9px;width:6px;height:6px;
+  background:var(--verdigris);transform:rotate(45deg);
+}
+.tiers{list-style:none;margin:0;padding:0;display:grid;gap:clamp(14px,1.6vw,18px)}
+.tiers li{
+  display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:start;
+  border:1px solid var(--hair-2);background:var(--surface);
+  padding:clamp(20px,2.2vw,26px);
+  transition:transform .35s cubic-bezier(.2,.8,.3,1),border-color .35s;
+}
+.tiers li:hover{transform:translateY(-3px);border-color:rgba(95,168,140,.42)}
+.tiers__n{
+  grid-row:1 / span 3;display:grid;place-items:center;
+  width:38px;height:38px;border:1px solid rgba(95,168,140,.45);
+  font:500 13px/1 var(--f-mono);color:var(--verdigris);
+}
+.tiers h4{margin:0;font:600 18.5px/1.15 var(--f-disp);letter-spacing:-.018em;color:var(--bone)}
+.tiers p{margin:8px 0 0;font-size:14.2px;line-height:1.58;color:var(--bone-2)}
+.tiers__tag{
+  margin-top:12px;font:400 10px/1 var(--f-mono);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);
+}
+
+/* ── sharper card hover: a border that traces itself ────── */
+.card{overflow:hidden}
+.card::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:radial-gradient(340px 190px at var(--mx,50%) var(--my,0%),rgba(200,106,50,.13),transparent 70%);
+  transition:opacity .4s;
+}
+.card:hover::before{opacity:1}
+
+@media (max-width:760px){
+  .tiers li{grid-template-columns:1fr}
+  .tiers__n{grid-row:auto;margin-bottom:12px}
+}

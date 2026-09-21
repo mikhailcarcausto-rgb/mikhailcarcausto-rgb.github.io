@@ -6,9 +6,9 @@
   "use strict";
 
   /* ─────────────────────────────────────────────────────────
-     1 · CONTACT CONFIG  ← the only block you normally edit
-     Leave a value as "" and its button disappears from the
-     site automatically, so nothing ever renders broken.
+     1 · CONFIG  ← the only block you normally edit
+     Leave a value as "" and whatever depends on it disappears
+     from the site, so nothing ever renders broken.
      ───────────────────────────────────────────────────────── */
   var CONTACT = {
     // Split so naive address-harvesting bots don't get a clean match.
@@ -26,6 +26,10 @@
     phone: "+51 924 298 403"
   };
 
+  // Path to a professional portrait, e.g. "assets/img/mikhail.jpg".
+  // While empty, the hero shows the open-pit illustration instead.
+  var PHOTO = "";
+
   var EMAIL = CONTACT.emailUser + "@" + CONTACT.emailHost;
 
   /* ─────────────────────────────────────────────────────────
@@ -37,7 +41,6 @@
      DEMO exists only to preview the layout. Publishing invented
      testimonials on a commercial site is deceptive advertising,
      so PREVIEW_DEMO must stay false in anything that ships.
-     Flip it locally, look, flip it back.
      ───────────────────────────────────────────────────────── */
   var PREVIEW_DEMO = false;
 
@@ -79,6 +82,7 @@
     });
 
     renderChannels();
+    wireWhatsApp();
     var btn = document.getElementById("reqsend");
     if (btn && !btn.disabled) btn.textContent = window.UI[lang].send;
 
@@ -94,7 +98,27 @@
   var guess = stored || ((navigator.language || "es").toLowerCase().indexOf("es") === 0 ? "es" : "en");
 
   /* ─────────────────────────────────────────────────────────
-     4 · DIRECT CONTACT CHANNELS
+     4 · WHATSAPP BUTTONS
+     Header and hero buttons open a chat with a pre-filled line
+     in the active language. Without a number they fall back to
+     the contact form anchor they already point at.
+     ───────────────────────────────────────────────────────── */
+  function waUrl() {
+    return "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(window.UI[lang].waMsg);
+  }
+  function wireWhatsApp() {
+    if (!CONTACT.whatsapp) return;
+    ["wa-top", "wa-hero"].forEach(function (id) {
+      var a = document.getElementById(id);
+      if (!a) return;
+      a.href = waUrl();
+      a.target = "_blank";
+      a.rel = "noopener";
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     5 · DIRECT CONTACT CHANNELS
      ───────────────────────────────────────────────────────── */
   var ICON = {
     mail: '<path d="M2 5h16v11H2z"/><path d="m2 6 8 6 8-6"/>',
@@ -117,8 +141,7 @@
       "<span>" + t.copy + "<small>" + EMAIL + "</small></span></button></li>";
 
     if (CONTACT.whatsapp) {
-      html += "<li><a href='https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(t.waMsg) +
-        "' target='_blank' rel='noopener'>" + svg(ICON.wa) +
+      html += "<li><a href='" + waUrl() + "' target='_blank' rel='noopener'>" + svg(ICON.wa) +
         "<span>" + t.chWa + "<small>" + t.chWaSub + "</small></span></a></li>";
     }
     if (CONTACT.linkedin) {
@@ -153,7 +176,19 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     5 · RENDER TESTIMONIALS (only when there are any)
+     6 · PORTRAIT
+     ───────────────────────────────────────────────────────── */
+  function renderPortrait() {
+    var img = document.getElementById("portrait");
+    var art = document.getElementById("heroArt");
+    if (!img || !art || !PHOTO) return;
+    img.onload = function () { img.hidden = false; art.hidden = true; };
+    img.onerror = function () { img.hidden = true; art.hidden = false; };  // bad path: keep the art
+    img.src = PHOTO;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     7 · TESTIMONIALS (only when there are any)
      ───────────────────────────────────────────────────────── */
   function renderQuotes() {
     var sec = document.getElementById("testimonios");
@@ -183,27 +218,55 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     6 · SECTION NUMBERING
-     Numbered in the DOM order that is actually visible, so a
-     hidden section never leaves a gap like 03 → 05.
+     8 · SERVICES ACCORDION + AUDIENCE FILTER
+     One panel open at a time. Filtering never leaves the list
+     with everything collapsed: the first visible item opens.
      ───────────────────────────────────────────────────────── */
-  function renumber() {
-    var i = 0;
-    document.querySelectorAll("section[id] .sec__n").forEach(function (el) {
-      var sec = el.closest("section");
-      if (sec && sec.hidden) return;
-      i += 1;
-      el.textContent = (i < 10 ? "0" : "") + i;
+  var items = Array.prototype.slice.call(document.querySelectorAll(".acc__item"));
+
+  function openItem(item) {
+    items.forEach(function (it) {
+      var on = it === item;
+      it.querySelector(".acc__btn").setAttribute("aria-expanded", on ? "true" : "false");
+      it.querySelector(".acc__panel").hidden = !on;
     });
   }
 
+  items.forEach(function (it) {
+    it.querySelector(".acc__btn").addEventListener("click", function () {
+      var isOpen = this.getAttribute("aria-expanded") === "true";
+      if (isOpen) {
+        this.setAttribute("aria-expanded", "false");
+        it.querySelector(".acc__panel").hidden = true;
+      } else {
+        openItem(it);
+      }
+    });
+  });
+
+  var filterBtns = document.querySelectorAll(".filters button");
+  function applyFilter(want) {
+    filterBtns.forEach(function (b) { b.classList.toggle("is-on", b.dataset.filter === want); });
+    var firstVisible = null;
+    items.forEach(function (it) {
+      var f = it.dataset.for;
+      var show = want === "all" || f === want || f === "both";
+      it.hidden = !show;
+      if (show && !firstVisible) firstVisible = it;
+    });
+    if (firstVisible) openItem(firstVisible);
+  }
+  filterBtns.forEach(function (b) {
+    b.addEventListener("click", function () { applyFilter(b.dataset.filter); });
+  });
+
   /* ─────────────────────────────────────────────────────────
-     7 · LEAD CLASSIFICATION
+     9 · LEAD CLASSIFICATION
      Decides how an incoming enquiry is labelled in the email
      that reaches the inbox.
      ───────────────────────────────────────────────────────── */
   function classifyLead(data) {
-    var party = data.party;      // "mining" | "supplier" | "other"
+    var party = data.party;      // "mining" | "supplier" | "pro" | "other"
     var urgency = data.urgency;  // "exploring" | "quarter" | "urgent"
 
     var priority = "C";
@@ -219,7 +282,7 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     8 · CONTACT FORM
+     10 · CONTACT FORM
      Posts to FormSubmit (no backend to host). If that is
      unreachable or not yet activated it falls back to opening a
      pre-filled email, so the form always works.
@@ -310,69 +373,8 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     9 · SERVICE FILTER
-     Two audiences share one grid, so let each visitor narrow it
-     to their own side. Items tagged "both" always stay visible.
-     ───────────────────────────────────────────────────────── */
-  var filterBtns = document.querySelectorAll(".filters button");
-  var cards = document.querySelectorAll(".card");
-
-  function applyFilter(want) {
-    filterBtns.forEach(function (b) { b.classList.toggle("is-on", b.dataset.filter === want); });
-    cards.forEach(function (c) {
-      var f = c.dataset.for;
-      c.hidden = !(want === "all" || f === want || f === "both");
-    });
-  }
-  filterBtns.forEach(function (b) {
-    b.addEventListener("click", function () { applyFilter(b.dataset.filter); });
-  });
-
-  /* ─────────────────────────────────────────────────────────
-     10 · NAV OVERFLOW
-     A clipped word reads as a bug; a faded edge reads as "swipe".
-     ───────────────────────────────────────────────────────── */
-  var nav = document.querySelector(".hdr__nav");
-  function checkNav() {
-    if (nav) nav.classList.toggle("is-scrollable", nav.scrollWidth > nav.clientWidth + 1);
-  }
-  window.addEventListener("resize", checkNav);
-
-  /* ─────────────────────────────────────────────────────────
-     11 · SCROLL REVEALS + YEAR
-     ───────────────────────────────────────────────────────── */
-  var yr = document.getElementById("yr");
-  if (yr) yr.textContent = new Date().getFullYear();
-
-  if ("IntersectionObserver" in window) {
-    var revealed = document.querySelectorAll(
-      ".sec__head, .side, .card, .case, .quote, .flow li, .bio__card, .bio__txt, .req, .direct, .wall"
-    );
-    revealed.forEach(function (el, i) {
-      el.classList.add("rv");
-      el.style.transitionDelay = (i % 4) * 60 + "ms";
-    });
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("in"); obs.unobserve(en.target); }
-      });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    revealed.forEach(function (el) { obs.observe(el); });
-
-    var nums = document.querySelectorAll("[data-count]");
-    var numObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) { countUp(en.target); numObs.unobserve(en.target); }
-      });
-    }, { threshold: 0.6 });
-    nums.forEach(function (el) { numObs.observe(el); });
-  }
-
-  /* ─────────────────────────────────────────────────────────
-     12 · COUNTERS
-     The headline figures count up once, when they scroll into
-     view. Numbers that arrive rather than sit there read as a
-     live system instead of a static brochure.
+     11 · COUNTERS
+     Count up once when the stats bar scrolls into view.
      ───────────────────────────────────────────────────────── */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -390,7 +392,6 @@
       done = true;
       el.textContent = final;
     }
-
     function step(t) {
       if (done) return;
       if (t0 === null) t0 = t;
@@ -400,56 +401,56 @@
       if (k < 1) requestAnimationFrame(step);
       else land();
     }
-
     /* A throttled tab can stop delivering animation frames mid-count, which
-       would strand the headline figure at 0. The timer guarantees the final
-       value lands whether or not the frames ever arrive. */
+       would strand the figure at 0. The timer guarantees the final value
+       lands whether or not the frames ever arrive. */
     setTimeout(land, dur + 150);
     requestAnimationFrame(step);
   }
 
   /* ─────────────────────────────────────────────────────────
-     13 · POINTER-TRACKED CARD GLOW
-     The radial highlight follows the cursor across each card.
-     Purely decorative, so it is skipped for reduced motion and
-     on touch pointers where there is no cursor to follow.
+     12 · NAV OVERFLOW
+     A clipped word reads as a bug; a faded edge reads as "swipe".
      ───────────────────────────────────────────────────────── */
-  var fine = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
-  if (fine && !reduce) {
-    document.querySelectorAll(".card").forEach(function (c) {
-      c.addEventListener("pointermove", function (e) {
-        var r = c.getBoundingClientRect();
-        c.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
-        c.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
-      });
-    });
+  var nav = document.querySelector(".hdr__nav");
+  function checkNav() {
+    if (nav) nav.classList.toggle("is-scrollable", nav.scrollWidth > nav.clientWidth + 1);
   }
+  window.addEventListener("resize", checkNav);
 
   /* ─────────────────────────────────────────────────────────
-     14 · HERO PARALLAX
-     The pit drifts slightly slower than the page. rAF-throttled
-     so the scroll handler never does layout work directly.
+     13 · SCROLL REVEALS + YEAR
      ───────────────────────────────────────────────────────── */
-  /* Drive the inner <svg>, not .hero__art: that wrapper carries the entry
-     animation, and an animation with fill-mode "both" keeps its final
-     keyframe (transform:none) winning over any inline transform forever. */
-  var art = document.querySelector(".pit");
-  if (art && !reduce) {
-    var ticking = false;
-    window.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        var y = window.scrollY;
-        if (y < 900) art.style.transform = "translate3d(0," + (y * -0.055).toFixed(1) + "px,0)";
-        ticking = false;
+  var yr = document.getElementById("yr");
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  if ("IntersectionObserver" in window) {
+    var revealed = document.querySelectorAll(
+      ".sec__head, .enfoque li, .acc, .pipe, .tech, .case, .mentor__who, .tiers li, .quote, .req, .direct"
+    );
+    revealed.forEach(function (el, i) {
+      el.classList.add("rv");
+      el.style.transitionDelay = (i % 4) * 60 + "ms";
+    });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("in"); obs.unobserve(en.target); }
       });
-    }, { passive: true });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    revealed.forEach(function (el) { obs.observe(el); });
+
+    var numObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { countUp(en.target); numObs.unobserve(en.target); }
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll("[data-count]").forEach(function (el) { numObs.observe(el); });
   }
 
   /* ─── go ─── */
+  renderPortrait();
   renderQuotes();
-  renumber();
+  if (items.length) openItem(items[0]);
   setLang(guess);
   checkNav();
 })();

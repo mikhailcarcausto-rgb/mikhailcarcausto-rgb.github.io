@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <!-- Source for og.png. Open at 1200x630 and screenshot. Not linked from the site. -->
 <html lang="es"><head><meta charset="utf-8">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;box-sizing:border-box}
-  body{width:1200px;height:630px;overflow:hidden;background:#0F2A4A;color:#fff;
-       font-family:"IBM Plex Sans",sans-serif;position:relative}
-  .arc{position:absolute;right:-140px;top:-220px;width:720px;height:720px;border:1px solid rgba(255,255,255,.12);border-radius:50%}
-  .arc2{position:absolute;right:-40px;top:-120px;width:520px;height:520px;border:1px solid rgba(255,255,255,.07);border-radius:50%}
-  .in{position:relative;padding:64px 76px;height:100%;display:flex;flex-direction:column}
-  .top{display:flex;align-items:center;gap:14px}
-  .top svg{width:44px;height:44px}
-  .top b{font-weight:700;font-size:30px;letter-spacing:.01em}
-  .kick{margin-top:auto;font:500 17px/1 "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:#E08A4E}
-  h1{margin-top:20px;font-weight:400;font-size:84px;line-height:1.05;letter-spacing:-.015em}
-  h1 b{display:block;font-weight:700}
-  .bar{margin-top:auto;display:flex;gap:56px;border-top:1px solid rgba(255,255,255,.18);padding-top:26px}
-  .bar div b{display:block;font-weight:700;font-size:30px}
-  .bar div span{display:block;margin-top:4px;font-size:16px;color:#9FB3CC}
+  body{width:1200px;height:630px;overflow:hidden;color:#fff;font-family:"Space Grotesk",system-ui,sans-serif;position:relative;
+    background:
+      radial-gradient(circle at 18% 8%,rgba(80,120,255,.14) 0%,transparent 36%),
+      radial-gradient(circle at 86% 92%,rgba(243,112,33,.30) 0%,transparent 42%),
+      linear-gradient(180deg,#050E1F 0%,#0A1F47 65%,#0E2858 100%)}
+  .sl{position:absolute;top:-120px;left:-170px;width:420px;height:760px;opacity:.6;filter:drop-shadow(0 0 8px rgba(243,112,33,.5));
+    background:
+      linear-gradient(118deg,transparent 28%,#F37021 28%,#F37021 28.35%,transparent 28.35%),
+      linear-gradient(118deg,transparent 36%,#F37021 36%,#F37021 36.35%,transparent 36.35%),
+      linear-gradient(118deg,transparent 44%,#F37021 44%,#F37021 44.35%,transparent 44.35%),
+      linear-gradient(118deg,transparent 52%,#F37021 52%,#F37021 52.35%,transparent 52.35%)}
+  .g{position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:60px 60px;-webkit-mask-image:radial-gradient(ellipse 90% 80% at 42% 55%,#000 30%,transparent 80%)}
+  .in{position:absolute;inset:0;padding:64px 76px 60px 150px;display:flex;flex-direction:column}
+  .top{display:flex;align-items:center;gap:16px}
+  .top svg{width:60px;height:60px}
+  .top b{font-weight:700;font-size:32px}
+  .top b span{font-weight:500;color:rgba(255,255,255,.62)}
+  .ey{margin-top:auto;align-self:flex-start;padding:9px 18px;border-radius:999px;border:1.6px solid #F37021;
+      font-weight:700;font-size:15px;letter-spacing:.18em;text-transform:uppercase;background:rgba(255,255,255,.04)}
+  h1{margin-top:22px;font-weight:700;font-size:96px;line-height:.98;letter-spacing:-.03em}
+  h1 em{display:block;font-style:normal;color:#F37021}
+  .bar{margin-top:30px;display:flex;gap:14px}
+  .kt{padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18)}
+  .kt b{display:block;font-weight:700;font-size:28px}
+  .kt span{display:block;margin-top:3px;font-size:15px;color:rgba(255,255,255,.66);font-family:system-ui,sans-serif}
 </style></head>
-<body><div class="arc"></div><div class="arc2"></div><div class="in">
+<body><div class="sl"></div><div class="g"></div><div class="in">
   <div class="top">
-    <svg viewBox="0 0 44 44" fill="none">
-      <path d="M4 12 L22 34 L40 12" stroke="#FFFFFF" stroke-opacity=".4" stroke-width="2.4" stroke-linejoin="round"/>
-      <path d="M10 13.5 L22 28 L34 13.5" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="2.4" stroke-linejoin="round"/>
-      <path d="M16 15 L22 22 L28 15" stroke="#E08A4E" stroke-width="2.8" stroke-linejoin="round"/>
-    </svg>
-    <b>MC Advisory</b>
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E2858"/><stop offset="1" stop-color="#050E1F"/></linearGradient></defs>
+      <rect width="48" height="48" rx="11" fill="url(#g)"/><rect x=".6" y=".6" width="46.8" height="46.8" rx="10.4" fill="none" stroke="rgba(255,255,255,.2)"/>
+      <path d="M36.5 14.5 A15 15 0 1 0 36.5 33.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/>
+      <path d="M15 31 L20.5 19 L24.5 26 L28.5 19 L34 31" fill="none" stroke="#F37021" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <b>MC <span>Advisory</span></b>
   </div>
-  <p class="kick">Contratos y Abastecimiento Minero</p>
-  <h1>Menos papeleo.<b>MÁS MINA.</b></h1>
+  <p class="ey">Mentoría · Supply chain · Minería</p>
+  <h1>Menos teoría.<em>Más criterio.</em></h1>
   <div class="bar">
-    <div><b>USD 680M</b><span>en contratos prime</span></div>
-    <div><b>100+</b><span>licitaciones</span></div>
-    <div><b>12+</b><span>años en minería</span></div>
-    <div><b>PE · CL · AU</b><span>tres países</span></div>
+    <div class="kt"><b>USD 680M</b><span>en contratos prime a cargo</span></div>
+    <div class="kt"><b>100+</b><span>licitaciones lideradas</span></div>
+    <div class="kt"><b>12+</b><span>años en supply minero</span></div>
   </div>
 </div></body></html>

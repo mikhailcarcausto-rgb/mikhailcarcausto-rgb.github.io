@@ -14,47 +14,37 @@
     // Split so naive address-harvesting bots don't get a clean match.
     emailUser: "mikhail.carcausto",
     emailHost: "gmail.com",
-
     // Digits only, country code first. Peru = 51.
     whatsapp: "51924298403",
-
-    // Full profile URL.
     linkedin: "https://www.linkedin.com/in/mikhail-carcausto",
-
-    // Display + dial format. Same line as WhatsApp — set to "" to drop the
-    // click-to-call row and leave only WhatsApp.
+    // Display + dial format. "" drops the click-to-call row.
     phone: "+51 924 298 403"
   };
 
-  // Path to a professional portrait, e.g. "assets/img/mikhail.jpg".
-  // While empty, the hero shows the open-pit illustration instead.
+  // Path to a square professional portrait, e.g. "assets/img/mikhail.jpg".
+  // While empty, the mentor card shows the MC mark instead.
   var PHOTO = "";
 
   var EMAIL = CONTACT.emailUser + "@" + CONTACT.emailHost;
 
   /* ─────────────────────────────────────────────────────────
      2 · TESTIMONIALS
-     REAL ones go in TESTIMONIALS. While it's empty the whole
-     section stays hidden — an empty "what they say" heading is
-     worse than none at all.
-
-     DEMO exists only to preview the layout. Publishing invented
-     testimonials on a commercial site is deceptive advertising,
-     so PREVIEW_DEMO must stay false in anything that ships.
+     REAL ones only. While empty the section stays hidden.
+     DEMO exists solely to preview the layout: publishing invented
+     testimonials is deceptive advertising, so PREVIEW_DEMO must
+     stay false in anything that ships.
      ───────────────────────────────────────────────────────── */
   var PREVIEW_DEMO = false;
-
   var TESTIMONIALS = [
-    // { quote: "…", name: "…", role: "Gerente de Contratos", org: "Minera …" }
+    // { quote: "…", name: "…", role: "Especialista de Contratos", org: "Minera …" }
   ];
-
   var DEMO = [
-    { quote: "Redujo a minutos un trámite que nos tomaba media jornada. Lo que más valoro es que el equipo quedó operándolo solo.",
-      name: "Nombre Apellido", role: "Gerente de Contratos", org: "Compañía minera (ejemplo)" },
-    { quote: "Entendió nuestro proceso en dos semanas y nos dijo qué no valía la pena automatizar. Eso nos ahorró más que el propio proyecto.",
-      name: "Nombre Apellido", role: "Superintendente de Abastecimiento", org: "Operación de cobre (ejemplo)" },
-    { quote: "Nos ordenó la propuesta técnica y ganamos la licitación siguiente. Sabe exactamente cómo la lee el comité.",
-      name: "Nombre Apellido", role: "Gerente Comercial", org: "Contratista de servicios (ejemplo)" }
+    { quote: "En dos sesiones ordené la evaluación que el comité me había devuelto. La segunda vez pasó sin observaciones.",
+      name: "Nombre Apellido", role: "Especialista de Contratos", org: "Compañía minera (ejemplo)" },
+    { quote: "El acompañamiento me dio el criterio que ningún curso me había dado. Lideré mi primera licitación sola.",
+      name: "Nombre Apellido", role: "Analista de Abastecimiento", org: "Operación de cobre (ejemplo)" },
+    { quote: "El programa me preparó para el cambio de rol. A los cinco meses ya estaba en la posición que buscaba.",
+      name: "Nombre Apellido", role: "Coordinador de Supply Chain", org: "Proyecto minero (ejemplo)" }
   ];
 
   /* ─────────────────────────────────────────────────────────
@@ -63,54 +53,46 @@
   var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-i18n]"));
   var ES = new Map();
   nodes.forEach(function (n) { ES.set(n, n.textContent); });
-
   var lang = "es";
 
   function setLang(next) {
     lang = next === "en" ? "en" : "es";
     document.documentElement.lang = lang;
     document.title = window.UI[lang].title;
-
     nodes.forEach(function (n) {
       var key = n.getAttribute("data-i18n");
       if (lang === "en" && window.EN[key]) n.textContent = window.EN[key];
       else n.textContent = ES.get(n);
     });
-
     document.querySelectorAll(".lang button").forEach(function (b) {
       b.classList.toggle("is-on", b.dataset.lang === lang);
     });
-
     renderChannels();
     wireWhatsApp();
     var btn = document.getElementById("reqsend");
     if (btn && !btn.disabled) btn.textContent = window.UI[lang].send;
-
     try { localStorage.setItem("mc_lang", lang); } catch (e) {}
   }
-
   document.querySelectorAll(".lang button").forEach(function (b) {
     b.addEventListener("click", function () { setLang(b.dataset.lang); });
   });
-
   var stored = null;
   try { stored = localStorage.getItem("mc_lang"); } catch (e) {}
   var guess = stored || ((navigator.language || "es").toLowerCase().indexOf("es") === 0 ? "es" : "en");
 
   /* ─────────────────────────────────────────────────────────
-     4 · WHATSAPP BUTTONS
-     Header and hero buttons open a chat with a pre-filled line
-     in the active language. Without a number they fall back to
-     the contact form anchor they already point at.
+     4 · WHATSAPP
+     Every .js-wa opens a chat with a pre-filled line in the
+     active language. Without a number they keep pointing at the
+     contact form, which is where their href already goes.
      ───────────────────────────────────────────────────────── */
-  function waUrl() {
-    return "https://wa.me/" + CONTACT.whatsapp + "?text=" + encodeURIComponent(window.UI[lang].waMsg);
+  function waUrl(extra) {
+    return "https://wa.me/" + CONTACT.whatsapp + "?text=" +
+      encodeURIComponent(window.UI[lang].waMsg + (extra ? " " + extra : ""));
   }
   function wireWhatsApp() {
     if (!CONTACT.whatsapp) return;
-    ["wa-top", "wa-hero"].forEach(function (id) {
-      var a = document.getElementById(id);
-      if (!a) return;
+    document.querySelectorAll(".js-wa").forEach(function (a) {
       a.href = waUrl();
       a.target = "_blank";
       a.rel = "noopener";
@@ -118,28 +100,36 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     5 · DIRECT CONTACT CHANNELS
+     5 · PLAN BUTTONS
+     Choosing a format pre-selects it in the form, so the visitor
+     never has to say twice what they already clicked.
+     ───────────────────────────────────────────────────────── */
+  var planSelect = document.getElementById("f-plan");
+  document.querySelectorAll(".js-pick").forEach(function (a) {
+    a.addEventListener("click", function () {
+      if (planSelect && a.dataset.plan) planSelect.value = a.dataset.plan;
+      var msgBox = document.getElementById("f-msg");
+      if (msgBox) setTimeout(function () { msgBox.focus({ preventScroll: true }); }, 450);
+    });
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     6 · DIRECT CHANNELS
      ───────────────────────────────────────────────────────── */
   var ICON = {
-    mail: '<path d="M2 5h16v11H2z"/><path d="m2 6 8 6 8-6"/>',
     wa:   '<path d="M3 17.5 4.2 14A7.2 7.2 0 1 1 7 16.8L3 17.5Z"/><path d="M7.4 7.8c.2 1.6 2.9 4.3 4.5 4.5.5.1 1.2-.6 1.4-1l-1.6-.9-.7.7c-.8-.4-1.6-1.2-2-2l.7-.7-.9-1.6c-.4.2-1.1.9-1 1.4"/>',
     in:   '<path d="M4.2 7.5v8.3M4.2 4.4v.1M8.6 15.8V7.5M8.6 11c0-2 1.3-3 2.8-3s2.8.9 2.8 3.2v4.6"/>',
+    mail: '<path d="M2 5h16v11H2z"/><path d="m2 6 8 6 8-6"/>',
     tel:  '<path d="M6.6 3.5 8.4 7 6.8 8.6c.9 1.9 2.7 3.7 4.6 4.6L13 11.6l3.5 1.8v2.8c0 .7-.6 1.3-1.3 1.2C8.3 16.9 3.1 11.7 2.4 4.8c-.1-.7.5-1.3 1.2-1.3h3Z"/>'
   };
   function svg(d) {
     return '<svg viewBox="0 0 20 20" aria-hidden="true" stroke-linecap="round" stroke-linejoin="round">' + d + "</svg>";
   }
-
   function renderChannels() {
     var list = document.getElementById("channels");
     if (!list) return;
     var t = window.UI[lang];
-    var html =
-      "<li><a href='mailto:" + EMAIL + "'>" + svg(ICON.mail) +
-      "<span>" + t.chEmail + "<small>" + EMAIL + "</small></span></a></li>" +
-      "<li><button type='button' id='copymail'>" + svg(ICON.mail) +
-      "<span>" + t.copy + "<small>" + EMAIL + "</small></span></button></li>";
-
+    var html = "";
     if (CONTACT.whatsapp) {
       html += "<li><a href='" + waUrl() + "' target='_blank' rel='noopener'>" + svg(ICON.wa) +
         "<span>" + t.chWa + "<small>" + t.chWaSub + "</small></span></a></li>";
@@ -148,6 +138,8 @@
       html += "<li><a href='" + CONTACT.linkedin + "' target='_blank' rel='noopener'>" + svg(ICON.in) +
         "<span>" + t.chIn + "<small>" + t.chInSub + "</small></span></a></li>";
     }
+    html += "<li><button type='button' id='copymail'>" + svg(ICON.mail) +
+      "<span>" + t.copy + "<small>" + EMAIL + "</small></span></button></li>";
     if (CONTACT.phone) {
       html += "<li><a href='tel:" + CONTACT.phone.replace(/[^\d+]/g, "") + "'>" + svg(ICON.tel) +
         "<span>" + t.chTel + "<small>" + CONTACT.phone + "</small></span></a></li>";
@@ -176,115 +168,72 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     6 · PORTRAIT
+     7 · PORTRAIT (swaps the MC mark on the mentor card)
      ───────────────────────────────────────────────────────── */
   function renderPortrait() {
-    var img = document.getElementById("portrait");
-    var art = document.getElementById("heroArt");
-    if (!img || !art || !PHOTO) return;
-    img.onload = function () { img.hidden = false; art.hidden = true; };
-    img.onerror = function () { img.hidden = true; art.hidden = false; };  // bad path: keep the art
-    img.src = PHOTO;
+    if (!PHOTO) return;
+    var slot = document.querySelector(".card__id svg");
+    if (!slot) return;
+    var img = new Image();
+    img.onload = function () {
+      img.alt = "Mikhail Carcausto";
+      img.width = 56; img.height = 56;
+      img.style.cssText = "width:56px;height:56px;border-radius:14px;object-fit:cover;flex:none";
+      slot.replaceWith(img);
+    };
+    img.src = PHOTO;   // on error nothing happens: the mark simply stays
   }
 
   /* ─────────────────────────────────────────────────────────
-     7 · TESTIMONIALS (only when there are any)
+     8 · TESTIMONIALS
      ───────────────────────────────────────────────────────── */
   function renderQuotes() {
     var sec = document.getElementById("testimonios");
     var box = document.getElementById("quotes");
     if (!sec || !box) return;
-
     var demo = PREVIEW_DEMO && !TESTIMONIALS.length;
     var list = TESTIMONIALS.length ? TESTIMONIALS : (demo ? DEMO : []);
     if (!list.length) { sec.hidden = true; return; }
-
     box.textContent = "";
     list.forEach(function (t) {
-      var fig = document.createElement("figure");
-      fig.className = "quote" + (demo ? " quote--demo" : "");
+      var art = document.createElement("article");
+      art.className = "plan";
+      if (demo) art.style.borderStyle = "dashed";
       var p = document.createElement("p");
-      p.textContent = t.quote;
-      var ft = document.createElement("footer");
+      p.textContent = "“" + t.quote + "”";
+      var who = document.createElement("p");
+      who.className = "plan__fit";
       var b = document.createElement("b");
-      b.textContent = t.name;
-      var s = document.createElement("span");
-      s.textContent = t.role + (t.org ? " · " + t.org : "");
-      ft.appendChild(b); ft.appendChild(s);
-      fig.appendChild(p); fig.appendChild(ft);
-      box.appendChild(fig);
+      b.textContent = t.name + (demo ? " · EJEMPLO" : "");
+      who.appendChild(b);
+      who.appendChild(document.createTextNode(" — " + t.role + (t.org ? ", " + t.org : "")));
+      art.appendChild(p); art.appendChild(who);
+      box.appendChild(art);
     });
     sec.hidden = false;
   }
 
   /* ─────────────────────────────────────────────────────────
-     8 · SERVICES ACCORDION + AUDIENCE FILTER
-     One panel open at a time. Filtering never leaves the list
-     with everything collapsed: the first visible item opens.
-     ───────────────────────────────────────────────────────── */
-  var items = Array.prototype.slice.call(document.querySelectorAll(".acc__item"));
-
-  function openItem(item) {
-    items.forEach(function (it) {
-      var on = it === item;
-      it.querySelector(".acc__btn").setAttribute("aria-expanded", on ? "true" : "false");
-      it.querySelector(".acc__panel").hidden = !on;
-    });
-  }
-
-  items.forEach(function (it) {
-    it.querySelector(".acc__btn").addEventListener("click", function () {
-      var isOpen = this.getAttribute("aria-expanded") === "true";
-      if (isOpen) {
-        this.setAttribute("aria-expanded", "false");
-        it.querySelector(".acc__panel").hidden = true;
-      } else {
-        openItem(it);
-      }
-    });
-  });
-
-  var filterBtns = document.querySelectorAll(".filters button");
-  function applyFilter(want) {
-    filterBtns.forEach(function (b) { b.classList.toggle("is-on", b.dataset.filter === want); });
-    var firstVisible = null;
-    items.forEach(function (it) {
-      var f = it.dataset.for;
-      var show = want === "all" || f === want || f === "both";
-      it.hidden = !show;
-      if (show && !firstVisible) firstVisible = it;
-    });
-    if (firstVisible) openItem(firstVisible);
-  }
-  filterBtns.forEach(function (b) {
-    b.addEventListener("click", function () { applyFilter(b.dataset.filter); });
-  });
-
-  /* ─────────────────────────────────────────────────────────
      9 · LEAD CLASSIFICATION
-     Decides how an incoming enquiry is labelled in the email
-     that reaches the inbox.
+     The subject line that lands in the inbox. Longer commitments
+     and company work sort first.
      ───────────────────────────────────────────────────────── */
-  function classifyLead(data) {
-    var party = data.party;      // "mining" | "supplier" | "pro" | "other"
-    var urgency = data.urgency;  // "exploring" | "quarter" | "urgent"
-
-    var priority = "C";
-    if (urgency === "urgent") priority = "A";
-    else if (urgency === "quarter") priority = party === "mining" ? "A" : "B";
-    else if (party === "mining") priority = "B";
-
-    var side = party === "mining" ? "MINERA"
-             : party === "supplier" ? "PROVEEDOR"
-             : party === "pro" ? "MENTORIA"
-             : "OTRO";
-    return { priority: priority, tag: "[" + priority + "·" + side + "]" };
+  function classifyLead(plan) {
+    var map = {
+      programa: ["A", "PROGRAMA"],
+      empresa:  ["A", "EMPRESA"],
+      proceso:  ["A", "PROCESO"],
+      sesion:   ["B", "SESION"],
+      nose:     ["B", "EXPLORANDO"]
+    };
+    var m = map[plan] || ["C", "OTRO"];
+    return { priority: m[0], tag: "[" + m[0] + "·" + m[1] + "]" };
   }
 
   /* ─────────────────────────────────────────────────────────
      10 · CONTACT FORM
      Posts to FormSubmit (no backend to host). If that is
-     unreachable or not yet activated it falls back to opening a
+     unreachable or not yet activated it falls back to a
      pre-filled email, so the form always works.
      ───────────────────────────────────────────────────────── */
   var form = document.getElementById("reqform");
@@ -296,33 +245,26 @@
     msg.classList.add("is-on");
     msg.classList.toggle("is-bad", !!bad);
   }
-
   function mailtoFallback(d, tag) {
-    var body = d.name + " — " + (d.company || "—") + "\n" + d.email + "\n\n" + d.message;
     window.location.href =
       "mailto:" + EMAIL +
-      "?subject=" + encodeURIComponent(tag + " " + d.name + (d.company ? " · " + d.company : "")) +
-      "&body=" + encodeURIComponent(body);
+      "?subject=" + encodeURIComponent(tag + " " + d.name) +
+      "&body=" + encodeURIComponent(d.name + "\n" + d.email + "\n\n" + d.message);
   }
 
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var t = window.UI[lang];
-
       if (form._honey.value) { say(t.ok); form.reset(); return; }
 
       var d = {
         name: form.name.value.trim(),
-        company: form.company.value.trim(),
         email: form.email.value.trim(),
-        party: form.party.value,
-        urgency: form.urgency.value,
+        plan: form.plan.value,
         message: form.message.value.trim()
       };
-
       [form.name, form.email, form.message].forEach(function (f) { f.classList.remove("err"); });
-
       if (!d.name || !d.email || !d.message) {
         if (!d.name) form.name.classList.add("err");
         if (!d.email) form.email.classList.add("err");
@@ -336,7 +278,7 @@
         return;
       }
 
-      var lead = classifyLead(d);
+      var lead = classifyLead(d.plan);
       sendBtn.disabled = true;
       sendBtn.textContent = t.sending;
       say(t.sending);
@@ -345,14 +287,12 @@
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: lead.tag + " " + d.name + (d.company ? " · " + d.company : ""),
+          _subject: lead.tag + " " + d.name,
           _template: "table",
           Prioridad: lead.priority,
           Nombre: d.name,
-          Empresa: d.company || "—",
           Correo: d.email,
-          Lado: d.party,
-          Urgencia: d.urgency,
+          Formato: d.plan,
           Mensaje: d.message
         })
       })
@@ -374,69 +314,44 @@
 
   /* ─────────────────────────────────────────────────────────
      11 · COUNTERS
-     Count up once when the stats bar scrolls into view.
      ───────────────────────────────────────────────────────── */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   function countUp(el) {
     var target = parseFloat(el.dataset.count);
-    var pre = el.dataset.pre || "";
-    var suf = el.dataset.suf || "";
+    var pre = el.dataset.pre || "", suf = el.dataset.suf || "";
     if (reduce || !isFinite(target)) return;
-
-    var final = pre + target + suf;
-    var dur = 1100, t0 = null, done = false;
-
-    function land() {                               // always end on the real number
-      if (done) return;
-      done = true;
-      el.textContent = final;
-    }
+    var final = pre + target + suf, dur = 1100, t0 = null, done = false;
+    function land() { if (done) return; done = true; el.textContent = final; }
     function step(t) {
       if (done) return;
       if (t0 === null) t0 = t;
       var k = Math.min((t - t0) / dur, 1);
-      var eased = 1 - Math.pow(1 - k, 3);           // ease-out cubic
-      el.textContent = pre + Math.round(target * eased) + suf;
-      if (k < 1) requestAnimationFrame(step);
-      else land();
+      el.textContent = pre + Math.round(target * (1 - Math.pow(1 - k, 3))) + suf;
+      if (k < 1) requestAnimationFrame(step); else land();
     }
-    /* A throttled tab can stop delivering animation frames mid-count, which
-       would strand the figure at 0. The timer guarantees the final value
-       lands whether or not the frames ever arrive. */
+    /* A throttled tab can stop delivering frames mid-count and strand the
+       figure at 0; the timer guarantees the real number always lands. */
     setTimeout(land, dur + 150);
     requestAnimationFrame(step);
   }
 
   /* ─────────────────────────────────────────────────────────
-     12 · NAV OVERFLOW
-     A clipped word reads as a bug; a faded edge reads as "swipe".
-     ───────────────────────────────────────────────────────── */
-  var nav = document.querySelector(".hdr__nav");
-  function checkNav() {
-    if (nav) nav.classList.toggle("is-scrollable", nav.scrollWidth > nav.clientWidth + 1);
-  }
-  window.addEventListener("resize", checkNav);
-
-  /* ─────────────────────────────────────────────────────────
-     13 · SCROLL REVEALS + YEAR
+     12 · REVEALS + YEAR
      ───────────────────────────────────────────────────────── */
   var yr = document.getElementById("yr");
   if (yr) yr.textContent = new Date().getFullYear();
 
   if ("IntersectionObserver" in window) {
-    var revealed = document.querySelectorAll(
-      ".sec__head, .enfoque li, .acc, .pipe, .tech, .case, .mentor__who, .tiers li, .quote, .req, .direct"
-    );
+    var revealed = document.querySelectorAll(".sec__head, .plan, .wins li, .steps li, .about > div, .facts li, .req, .direct");
     revealed.forEach(function (el, i) {
       el.classList.add("rv");
-      el.style.transitionDelay = (i % 4) * 60 + "ms";
+      el.style.transitionDelay = (i % 3) * 70 + "ms";
     });
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("in"); obs.unobserve(en.target); }
       });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.06 });
     revealed.forEach(function (el) { obs.observe(el); });
 
     var numObs = new IntersectionObserver(function (entries) {
@@ -450,7 +365,5 @@
   /* ─── go ─── */
   renderPortrait();
   renderQuotes();
-  if (items.length) openItem(items[0]);
   setLang(guess);
-  checkNav();
 })();

@@ -21,9 +21,6 @@
     phone: "+51 924 298 403"
   };
 
-  // Path to a square professional portrait, e.g. "assets/img/mikhail.jpg".
-  // While empty, the mentor card shows the MC mark instead.
-  var PHOTO = "";
 
   var EMAIL = CONTACT.emailUser + "@" + CONTACT.emailHost;
 
@@ -53,6 +50,9 @@
   var nodes = Array.prototype.slice.call(document.querySelectorAll("[data-i18n]"));
   var ES = new Map();
   nodes.forEach(function (n) { ES.set(n, n.textContent); });
+  var altNodes = Array.prototype.slice.call(document.querySelectorAll("[data-i18n-alt]"));
+  var ALT_ES = new Map();
+  altNodes.forEach(function (n) { ALT_ES.set(n, n.alt); });
   var lang = "es";
 
   function setLang(next) {
@@ -63,6 +63,10 @@
       var key = n.getAttribute("data-i18n");
       if (lang === "en" && window.EN[key]) n.textContent = window.EN[key];
       else n.textContent = ES.get(n);
+    });
+    altNodes.forEach(function (img) {
+      var key = img.getAttribute("data-i18n-alt");
+      img.alt = (lang === "en" && window.EN[key]) ? window.EN[key] : ALT_ES.get(img);
     });
     document.querySelectorAll(".lang button").forEach(function (b) {
       b.classList.toggle("is-on", b.dataset.lang === lang);
@@ -168,23 +172,6 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     7 · PORTRAIT (swaps the MC mark on the mentor card)
-     ───────────────────────────────────────────────────────── */
-  function renderPortrait() {
-    if (!PHOTO) return;
-    var slot = document.querySelector(".card__id svg");
-    if (!slot) return;
-    var img = new Image();
-    img.onload = function () {
-      img.alt = "Mikhail Carcausto";
-      img.width = 56; img.height = 56;
-      img.style.cssText = "width:56px;height:56px;border-radius:14px;object-fit:cover;flex:none";
-      slot.replaceWith(img);
-    };
-    img.src = PHOTO;   // on error nothing happens: the mark simply stays
-  }
-
-  /* ─────────────────────────────────────────────────────────
      8 · TESTIMONIALS
      ───────────────────────────────────────────────────────── */
   function renderQuotes() {
@@ -211,6 +198,48 @@
       box.appendChild(art);
     });
     sec.hidden = false;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     8b · AUDIENCE TABS
+     One services section, two audiences. ARIA tabs with arrow-
+     key support; any [data-tab] link (nav, hero) opens its panel,
+     and #empresas / #profesionales deep-link straight in.
+     ───────────────────────────────────────────────────────── */
+  var tabBtns = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var TAB = { pro: "tab-pro", emp: "tab-emp" };
+
+  function selectTab(btn, focus) {
+    tabBtns.forEach(function (b) {
+      var on = b === btn;
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+      document.getElementById(b.getAttribute("aria-controls")).hidden = !on;
+    });
+    if (focus) btn.focus();
+  }
+  tabBtns.forEach(function (b, i) {
+    b.addEventListener("click", function () { selectTab(b); });
+    b.addEventListener("keydown", function (e) {
+      var k = e.key, n = tabBtns.length, to = null;
+      if (k === "ArrowRight") to = tabBtns[(i + 1) % n];
+      else if (k === "ArrowLeft") to = tabBtns[(i - 1 + n) % n];
+      else if (k === "Home") to = tabBtns[0];
+      else if (k === "End") to = tabBtns[n - 1];
+      if (to) { e.preventDefault(); selectTab(to, true); }
+    });
+  });
+  document.querySelectorAll("[data-tab]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var btn = document.getElementById(TAB[a.dataset.tab]);
+      if (btn) selectTab(btn);
+    });
+  });
+  var hash = (location.hash || "").toLowerCase();
+  if (hash === "#empresas" || hash === "#profesionales") {
+    selectTab(document.getElementById(hash === "#empresas" ? "tab-emp" : "tab-pro"));
+    var svc = document.getElementById("servicios");
+    if (svc) setTimeout(function () { svc.scrollIntoView(); }, 0);
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -342,7 +371,7 @@
   if (yr) yr.textContent = new Date().getFullYear();
 
   if ("IntersectionObserver" in window) {
-    var revealed = document.querySelectorAll(".sec__head, .plan, .wins li, .steps li, .about > div, .facts li, .req, .direct");
+    var revealed = document.querySelectorAll(".sec__head, .isnot__col, .steps li, .about__photo, .about__txt, .req, .direct");
     revealed.forEach(function (el, i) {
       el.classList.add("rv");
       el.style.transitionDelay = (i % 3) * 70 + "ms";
@@ -363,7 +392,6 @@
   }
 
   /* ─── go ─── */
-  renderPortrait();
   renderQuotes();
   setLang(guess);
 })();

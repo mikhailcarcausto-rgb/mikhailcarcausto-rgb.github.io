@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MC Advisory — Mentoría en contratos y abastecimiento minero</title>
-<meta name="description" content="Mentoría uno a uno en contratos y abastecimiento minero con un superintendente en ejercicio. Lidera licitaciones y da el salto de cargo.">
+<title>MC Advisory — Mentoría y consultoría en contratos mineros</title>
+<meta name="description" content="Mentoría para profesionales de supply y consultoría para empresas mineras, con un superintendente de contratos en ejercicio. Menos teoría, más criterio.">
 <meta name="author" content="Mikhail Carcausto">
 <meta name="theme-color" content="#050E1F">
 <link rel="canonical" href="https://mikhailcarcausto-rgb.github.io/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="MC Advisory — Menos teoría. Más criterio.">
-<meta property="og:description" content="Mentoría en contratos y abastecimiento minero con un superintendente en ejercicio. Para profesionales de supply chain.">
+<meta property="og:description" content="Mentoría para profesionales de supply y consultoría para empresas mineras, con un superintendente de contratos en ejercicio.">
 <meta property="og:url" content="https://mikhailcarcausto-rgb.github.io/">
 <meta property="og:image" content="https://mikhailcarcausto-rgb.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -20,9 +20,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Brand font loads off the critical path: first paint happens in the system font,
-     then swaps. Measured on throttled mobile: 3.4 s -> ~2.1 s to first paint. -->
+     then swaps. Measured on throttled mobile: 3.4 s -> ~2.3 s to first paint. -->
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&display=swap"></noscript>
+<link rel="preload" as="image" type="image/webp" fetchpriority="high"
+      imagesrcset="assets/img/photos/hero-600.webp 600w, assets/img/photos/hero-900.webp 900w"
+      imagesizes="(min-width:960px) 440px, 90vw">
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/i18n.js" defer></script>
 <script src="assets/js/site.js" defer></script>
@@ -32,14 +35,15 @@
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "MC Advisory",
-  "description": "Mentoría y consultoría en contratos y abastecimiento minero para profesionales de supply chain.",
+  "description": "Mentoría para profesionales de supply chain y consultoría en contratos y abastecimiento para empresas mineras.",
   "url": "https://mikhailcarcausto-rgb.github.io/",
+  "image": "https://mikhailcarcausto-rgb.github.io/assets/img/photos/hero-900.jpg",
   "email": "mikhail.carcausto@gmail.com",
   "telephone": "+51924298403",
   "areaServed": ["Perú", "Chile", "Latinoamérica"],
   "availableLanguage": ["es", "en", "pt"],
   "founder": { "@type": "Person", "name": "Mikhail Carcausto",
-               "jobTitle": "Contracts Lead / Superintendente de Contratos" }
+               "jobTitle": "Superintendente de Contratos" }
 }
 </script>
 </head>
@@ -57,6 +61,8 @@
       <path d="M15 31 L20.5 19 L24.5 26 L28.5 19 L34 31" fill="none" stroke="#F37021" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
     </symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.3-.5 0-1.1.2-3.6-.8-3-1.3-5-4.4-5.1-4.6-.2-.2-1.3-1.7-1.3-3.2 0-1.5.8-2.3 1.1-2.6.3-.3.6-.4.8-.4h.6c.2 0 .5 0 .7.5l.9 2.2c.1.2.1.4 0 .6l-.4.6-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.2.4-.2.6-.1l2.1 1c.3.1.5.2.5.4v.9Z"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 8.2l2 2 4-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-no" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
   </defs>
 </svg>
 
@@ -70,12 +76,13 @@
     </span>
   </a>
   <nav class="hdr__nav" aria-label="Principal">
-    <a href="#formatos" data-i18n="nav.plans">Formatos</a>
-    <a href="#sobre" data-i18n="nav.about">Tu mentor</a>
+    <a href="#servicios" data-tab="pro" data-i18n="nav.pro">Profesionales</a>
+    <a href="#servicios" data-tab="emp" data-i18n="nav.emp">Empresas</a>
+    <a href="#sobre" data-i18n="nav.about">Sobre mí</a>
     <a href="#contacto" data-i18n="nav.contact">Contacto</a>
   </nav>
   <a class="btn btn--primary btn--sm js-wa" href="#contacto">
-    <svg aria-hidden="true"><use href="#i-wa"/></svg><span data-i18n="cta.short">Agenda tu sesión</span>
+    <svg aria-hidden="true"><use href="#i-wa"/></svg><span data-i18n="cta.short">Conversemos</span>
   </a>
   <div class="lang" role="group" aria-label="Idioma / Language">
     <button type="button" data-lang="es" class="is-on">ES</button>
@@ -90,137 +97,177 @@
 <section class="hero" id="top">
   <div class="grid" aria-hidden="true"></div>
   <span class="orb orb--1" aria-hidden="true"></span>
-  <span class="orb orb--2" aria-hidden="true"></span>
 
   <div class="wrap hero__in">
-    <div>
-      <span class="ey"><i aria-hidden="true"></i><span data-i18n="hero.ey">Mentoría · Supply chain · Minería</span></span>
+    <div class="hero__copy">
+      <span class="ey"><i aria-hidden="true"></i><span data-i18n="hero.ey">Mentoría y consultoría · Supply minero</span></span>
       <h1 class="hero__h">
         <span data-i18n="hero.l1">Menos teoría.</span>
         <span class="shine" data-i18n="hero.l2">Más criterio.</span>
       </h1>
-      <p class="hero__p"><span data-i18n="hero.p1">Mentoría en contratos y abastecimiento con un </span><b data-i18n="hero.pb">superintendente en ejercicio</b><span data-i18n="hero.p2">. Para el profesional de supply que quiere liderar los procesos grandes, no solo ejecutarlos.</span></p>
+      <p class="hero__p"><span data-i18n="hero.p1">Mentoría para profesionales de supply y consultoría para empresas mineras, con el criterio de un </span><b data-i18n="hero.pb">superintendente de contratos en ejercicio</b><span data-i18n="hero.p2">.</span></p>
       <div class="hero__act">
-        <a class="btn btn--primary js-wa" href="#contacto"><svg aria-hidden="true"><use href="#i-wa"/></svg><span data-i18n="cta.main">Agenda tu sesión</span></a>
-        <a class="btn btn--glass" href="#formatos" data-i18n="cta.plans">Ver formatos</a>
+        <a class="btn btn--primary" href="#servicios" data-tab="pro" data-i18n="hero.cta1">Soy profesional de supply</a>
+        <a class="btn btn--glass" href="#servicios" data-tab="emp" data-i18n="hero.cta2">Represento a una empresa</a>
       </div>
       <p class="hero__note">
-        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8.2l2 2 4-4.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg aria-hidden="true"><use href="#i-ok"/></svg>
         <span data-i18n="hero.note">Primera conversación de 20 minutos para entender tu caso.</span>
       </p>
     </div>
 
-    <aside class="card" aria-label="Mikhail Carcausto">
-      <div class="card__id">
-        <svg aria-hidden="true"><use href="#mc"/></svg>
-        <div><b>Mikhail Carcausto</b><span data-i18n="card.role">Contracts Lead · Superintendente de contratos</span></div>
-      </div>
-      <div class="kpis">
-        <div class="kt"><b data-count="680" data-pre="USD " data-suf="M">USD 680M</b><span data-i18n="kpi.1">en contratos prime a cargo</span></div>
-        <div class="kt"><b data-count="100" data-suf="+">100+</b><span data-i18n="kpi.2">licitaciones lideradas</span></div>
-        <div class="kt"><b data-count="12" data-suf="+">12+</b><span data-i18n="kpi.3">años en supply minero</span></div>
-        <div class="kt"><b data-count="3">3</b><span data-i18n="kpi.4">países: Perú, Chile y Australia</span></div>
-      </div>
-      <ul class="chips">
-        <li>Curtin University</li><li>ISO 19011</li><li>Power Platform</li><li>ES · EN · PT</li>
+    <figure class="hero__fig">
+      <picture>
+        <source type="image/webp" srcset="assets/img/photos/hero-600.webp 600w, assets/img/photos/hero-900.webp 900w" sizes="(min-width:960px) 440px, 90vw">
+        <img src="assets/img/photos/hero-900.jpg" srcset="assets/img/photos/hero-600.jpg 600w, assets/img/photos/hero-900.jpg 900w"
+             sizes="(min-width:960px) 440px, 90vw" width="900" height="1198" fetchpriority="high"
+             alt="Mikhail Carcausto, superintendente de contratos, de brazos cruzados frente a una pared azul" data-i18n-alt="hero.alt">
+      </picture>
+      <figcaption class="plate">
+        <b>Mikhail Carcausto</b>
+        <span data-i18n="plate.role">Superintendente de contratos · Minería</span>
+      </figcaption>
+      <ul class="float" aria-label="Trayectoria en cifras">
+        <li class="float__a"><b data-count="680" data-pre="USD " data-suf="M">USD 680M</b><span data-i18n="kpi.1">en contratos prime a cargo</span></li>
+        <li class="float__b"><b data-count="100" data-suf="+">100+</b><span data-i18n="kpi.2">licitaciones lideradas</span></li>
+        <li class="float__c"><b data-count="12" data-suf="+">12+</b><span data-i18n="kpi.3">años en supply minero</span></li>
       </ul>
-    </aside>
+    </figure>
   </div>
 </section>
 
-<!-- ══ TRUST ══ -->
+<!-- ══ AUTHORITY ══ -->
 <section class="strip" aria-label="Trayectoria">
   <div class="wrap strip__in">
-    <span class="strip__lbl" data-i18n="strip.lbl">Formado en</span>
+    <span class="strip__lbl" data-i18n="strip.lbl">Trayectoria en</span>
     <ul>
       <li>Anglo American</li><li>Freeport-McMoRan</li><li>MMG</li><li>EY</li><li>Caterpillar</li>
     </ul>
-    <p class="strip__note" data-i18n="strip.note">Experiencia laboral en estas organizaciones; no implica su respaldo.</p>
+    <span class="strip__sep" aria-hidden="true"></span>
+    <span class="strip__lbl" data-i18n="strip.lbl2">Expositor en</span>
+    <ul><li>PERUMIN 37</li></ul>
+    <p class="strip__note" data-i18n="strip.note">Experiencia profesional en estas organizaciones y eventos; no implica su respaldo.</p>
   </div>
 </section>
 
-<!-- ══ FORMATOS ══ -->
-<section class="sec sec--a" id="formatos">
+<!-- ══ SERVICIOS (dos públicos, una sección) ══ -->
+<section class="sec sec--a" id="servicios">
   <div class="wrap">
     <div class="sec__head">
-      <span class="ey" data-i18n="plans.ey">Formatos</span>
-      <h2 data-i18n="plans.h">Elige cómo trabajamos</h2>
-      <p class="sec__lead" data-i18n="plans.lead">Tres formatos según dónde estás hoy. Todos uno a uno, en español o en inglés.</p>
+      <span class="ey" data-i18n="svc.ey">Cómo te ayudo</span>
+      <h2 data-i18n="svc.h">Elige tu camino</h2>
     </div>
 
-    <div class="plans">
-      <article class="plan">
-        <div class="plan__top"><span class="plan__n">A</span><span class="plan__dur" data-i18n="p1.dur">90 min</span></div>
-        <h3 data-i18n="p1.h">Sesión puntual</h3>
-        <p data-i18n="p1.p">Traes un problema concreto y sales con una decisión.</p>
-        <ul>
-          <li data-i18n="p1.b1">Una evaluación técnica o comercial que no cuadra</li>
-          <li data-i18n="p1.b2">Un reclamo, una adenda o una negociación trabada</li>
-          <li data-i18n="p1.b3">Tu entregable revisado antes de que llegue al comité</li>
-        </ul>
-        <p class="plan__fit"><b data-i18n="fit">Ideal si:</b> <span data-i18n="p1.fit">tienes un plazo encima.</span></p>
-        <a class="btn btn--glass js-pick" data-plan="sesion" href="#contacto" data-i18n="p1.cta">Agendar sesión</a>
-      </article>
+    <div class="tabs" role="tablist" aria-label="Tipo de cliente">
+      <button type="button" role="tab" id="tab-pro" aria-controls="panel-pro" aria-selected="true" data-i18n="tab.pro">Para profesionales</button>
+      <button type="button" role="tab" id="tab-emp" aria-controls="panel-emp" aria-selected="false" tabindex="-1" data-i18n="tab.emp">Para empresas</button>
+    </div>
 
-      <article class="plan">
-        <div class="plan__top"><span class="plan__n">B</span><span class="plan__dur" data-i18n="p2.dur">Por proceso</span></div>
-        <h3 data-i18n="p2.h">Acompañamiento en proceso</h3>
-        <p data-i18n="p2.p">Te acompaño en una licitación real, de la estrategia a la adjudicación.</p>
-        <ul>
-          <li data-i18n="p2.b1">Estrategia de abastecimiento, criterios y pesos</li>
-          <li data-i18n="p2.b2">Bid tab y recomendación que resisten una auditoría</li>
-          <li data-i18n="p2.b3">Cada entregable revisado antes de enviarlo</li>
-        </ul>
-        <p class="plan__fit"><b data-i18n="fit">Ideal si:</b> <span data-i18n="p2.fit">lideras tu primera licitación grande.</span></p>
-        <a class="btn btn--primary js-pick" data-plan="proceso" href="#contacto" data-i18n="p2.cta">Quiero este formato</a>
-      </article>
+    <div class="panel" role="tabpanel" id="panel-pro" aria-labelledby="tab-pro">
+      <p class="panel__lead" data-i18n="pro.lead">Mientras más grande el contrato, menos gente entiende lo que estás enfrentando. Ahí un curso ya no alcanza: necesitas a alguien que haya estado en esa mesa, y que siga estándolo.</p>
+      <div class="plans">
+        <article class="plan">
+          <div class="plan__top"><span class="plan__n">A</span><span class="plan__dur" data-i18n="p1.dur">90 min</span></div>
+          <h3 data-i18n="p1.h">Sesión puntual</h3>
+          <p data-i18n="p1.p">Traes un problema concreto y sales con una decisión.</p>
+          <ul>
+            <li data-i18n="p1.b1">Una evaluación técnica o comercial que no cuadra</li>
+            <li data-i18n="p1.b2">Un reclamo, una adenda o una negociación trabada</li>
+            <li data-i18n="p1.b3">Tu entregable revisado antes del comité</li>
+          </ul>
+          <a class="btn btn--glass js-pick" data-plan="sesion" href="#contacto" data-i18n="p1.cta">Agendar sesión</a>
+        </article>
+        <article class="plan plan--hi">
+          <div class="plan__top"><span class="plan__n">B</span><span class="plan__dur" data-i18n="p2.dur">Por proceso</span></div>
+          <h3 data-i18n="p2.h">Acompañamiento en proceso</h3>
+          <p data-i18n="p2.p">Te acompaño en una licitación real, de la estrategia a la adjudicación.</p>
+          <ul>
+            <li data-i18n="p2.b1">Estrategia de abastecimiento, criterios y pesos</li>
+            <li data-i18n="p2.b2">Bid tab y recomendación que resisten una auditoría</li>
+            <li data-i18n="p2.b3">Cada entregable revisado antes de enviarlo</li>
+          </ul>
+          <a class="btn btn--primary js-pick" data-plan="proceso" href="#contacto" data-i18n="p2.cta">Quiero este formato</a>
+        </article>
+        <article class="plan">
+          <div class="plan__top"><span class="plan__n">C</span><span class="plan__dur" data-i18n="p3.dur">6 meses</span></div>
+          <h3 data-i18n="p3.h">Programa de desarrollo</h3>
+          <p data-i18n="p3.p">Un plan hacia tu siguiente cargo, con objetivos medibles.</p>
+          <ul>
+            <li data-i18n="p3.b1">Sesiones quincenales y plan de trabajo</li>
+            <li data-i18n="p3.b2">Power BI y automatización con IA</li>
+            <li data-i18n="p3.b3">Preparación para superintendencia o rol regional</li>
+          </ul>
+          <a class="btn btn--glass js-pick" data-plan="programa" href="#contacto" data-i18n="p3.cta">Quiero este formato</a>
+        </article>
+      </div>
+    </div>
 
-      <article class="plan">
-        <div class="plan__top"><span class="plan__n">C</span><span class="plan__dur" data-i18n="p3.dur">6 meses</span></div>
-        <h3 data-i18n="p3.h">Programa de desarrollo</h3>
-        <p data-i18n="p3.p">Un plan hacia tu siguiente cargo, con objetivos medibles.</p>
-        <ul>
-          <li data-i18n="p3.b1">Sesiones quincenales y un plan de trabajo</li>
-          <li data-i18n="p3.b2">Herramientas: Power BI y automatización con IA</li>
-          <li data-i18n="p3.b3">Preparación para superintendencia o rol regional</li>
-        </ul>
-        <p class="plan__fit"><b data-i18n="fit">Ideal si:</b> <span data-i18n="p3.fit">vas por tu siguiente cargo.</span></p>
-        <a class="btn btn--glass js-pick" data-plan="programa" href="#contacto" data-i18n="p3.cta">Quiero este formato</a>
-      </article>
+    <div class="panel" role="tabpanel" id="panel-emp" aria-labelledby="tab-emp" hidden>
+      <p class="panel__lead" data-i18n="emp.lead">Tu equipo de contratos debería estar negociando, no redactando. Construyo los sistemas que le devuelven ese tiempo, dentro de tus propias herramientas y sin plataformas nuevas que licenciar.</p>
+      <div class="plans">
+        <article class="plan">
+          <div class="plan__top"><span class="plan__n">1</span><span class="plan__dur" data-i18n="e1.dur">2 semanas</span></div>
+          <h3 data-i18n="e1.h">Diagnóstico del ciclo</h3>
+          <p data-i18n="e1.p">Dónde se atasca tu ciclo de contratación, medido y con números.</p>
+          <ul>
+            <li data-i18n="e1.b1">Mapa del proceso real, no el del manual</li>
+            <li data-i18n="e1.b2">Tiempos por etapa y cuellos de botella</li>
+            <li data-i18n="e1.b3">Qué automatizar primero y qué no tocar</li>
+          </ul>
+          <a class="btn btn--glass js-pick" data-plan="empresa" href="#contacto" data-i18n="e.cta">Consultar para mi empresa</a>
+        </article>
+        <article class="plan plan--hi">
+          <div class="plan__top"><span class="plan__n">2</span><span class="plan__dur" data-i18n="e2.dur">3–6 semanas</span></div>
+          <h3 data-i18n="e2.h">Automatización documental</h3>
+          <p data-i18n="e2.p">Cartas de adjudicación, memos y actas con tu formato exacto, en minutos.</p>
+          <ul>
+            <li data-i18n="e2.b1">Agente de IA que redacta con el estilo de tu casa</li>
+            <li data-i18n="e2.b2">Auditoría que bloquea cifras sin sustento</li>
+            <li data-i18n="e2.b3">De 4 horas a 2 minutos por carta, ya probado</li>
+          </ul>
+          <a class="btn btn--primary js-pick" data-plan="empresa" href="#contacto" data-i18n="e.cta">Consultar para mi empresa</a>
+        </article>
+        <article class="plan">
+          <div class="plan__top"><span class="plan__n">3</span><span class="plan__dur" data-i18n="e3.dur">Por categoría</span></div>
+          <h3 data-i18n="e3.h">Sourcing y licitaciones</h3>
+          <p data-i18n="e3.p">Procesos competitivos defendibles, de la estrategia a la firma.</p>
+          <ul>
+            <li data-i18n="e3.b1">Estrategia de abastecimiento por categoría</li>
+            <li data-i18n="e3.b2">Criterios, pesos y bid tab trazables</li>
+            <li data-i18n="e3.b3">Reportería ejecutiva en Power BI</li>
+          </ul>
+          <a class="btn btn--glass js-pick" data-plan="empresa" href="#contacto" data-i18n="e.cta">Consultar para mi empresa</a>
+        </article>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══ LOGROS + PASOS ══ -->
-<section class="sec sec--b" id="logros">
+<!-- ══ ENFOQUE ══ -->
+<section class="sec sec--b" id="enfoque">
   <div class="wrap">
     <div class="sec__head">
-      <span class="ey" data-i18n="wins.ey">Para tu carrera</span>
-      <h2 data-i18n="wins.h">Lo que vas a poder hacer</h2>
+      <span class="ey" data-i18n="ap.ey">Cómo trabajo</span>
+      <h2 data-i18n="ap.h">Directo. Aplicado. Sin plantillas.</h2>
     </div>
-    <ul class="wins">
-      <li>
-        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="2" fill="currentColor"/></svg>
-        <b data-i18n="w1.h">Liderar una licitación de alto valor</b>
-        <span data-i18n="w1.p">Con criterios y pesos que resisten una auditoría.</span>
-      </li>
-      <li>
-        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 4 L27 9 V16 C27 22 22 27 16 29 C10 27 5 22 5 16 V9 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M11 16 L14.5 19.5 L21 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <b data-i18n="w2.h">Defender tu recomendación en comité</b>
-        <span data-i18n="w2.p">Sabiendo qué van a preguntar antes de que pregunten.</span>
-      </li>
-      <li>
-        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 27 H27" stroke="currentColor" stroke-width="2"/><rect x="8" y="17" width="4" height="10" fill="currentColor" opacity=".5"/><rect x="14" y="12" width="4" height="15" fill="currentColor" opacity=".75"/><rect x="20" y="6" width="4" height="21" fill="currentColor"/></svg>
-        <b data-i18n="w3.h">Automatizar tu propio reporte</b>
-        <span data-i18n="w3.p">Power BI y agentes de IA aplicados a tu trabajo diario.</span>
-      </li>
-      <li>
-        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M6 26 L13 17 L18 21 L26 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 9 H26 V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <b data-i18n="w4.h">Dar el salto de cargo</b>
-        <span data-i18n="w4.p">A superintendencia o a un rol regional, con un plan.</span>
-      </li>
-    </ul>
-
+    <div class="isnot">
+      <div class="isnot__col isnot__col--yes">
+        <h3 data-i18n="ap.yes">Lo que es</h3>
+        <ul>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg><span data-i18n="ap.y1">Criterio aplicado a tu caso real, esta misma semana.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg><span data-i18n="ap.y2">Te digo lo que yo haría en tu lugar, aunque no sea lo que quieres oír.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg><span data-i18n="ap.y3">Hecho a tu medida: cada caso se trabaja desde cero.</span></li>
+        </ul>
+      </div>
+      <div class="isnot__col isnot__col--no">
+        <h3 data-i18n="ap.no">Lo que no es</h3>
+        <ul>
+          <li><svg aria-hidden="true"><use href="#i-no"/></svg><span data-i18n="ap.n1">Un curso grabado ni teoría de manual.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-no"/></svg><span data-i18n="ap.n2">Motivación ni frases para LinkedIn.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-no"/></svg><span data-i18n="ap.n3">Hacer tu trabajo por ti: te dejo capaz de hacerlo.</span></li>
+        </ul>
+      </div>
+    </div>
     <ol class="steps" aria-label="Cómo empezamos">
       <li><div><b data-i18n="s1.h">Escríbeme</b><span data-i18n="s1.p">Por WhatsApp o el formulario, en dos líneas.</span></div></li>
       <li><div><b data-i18n="s2.h">Conversación de 20 min</b><span data-i18n="s2.p">Entendemos tu caso y el formato que te conviene.</span></div></li>
@@ -229,21 +276,48 @@
   </div>
 </section>
 
-<!-- ══ SOBRE ══ -->
+<!-- ══ SOBRE MÍ ══ -->
 <section class="sec sec--a" id="sobre">
   <div class="wrap about">
-    <div>
-      <span class="ey" data-i18n="me.ey">Tu mentor</span>
+    <figure class="about__photo">
+      <picture>
+        <source type="image/webp" srcset="assets/img/photos/retrato-bn-600.webp 600w, assets/img/photos/retrato-bn-900.webp 900w" sizes="(min-width:900px) 420px, 90vw">
+        <img src="assets/img/photos/retrato-bn-900.jpg" srcset="assets/img/photos/retrato-bn-600.jpg 600w, assets/img/photos/retrato-bn-900.jpg 900w"
+             sizes="(min-width:900px) 420px, 90vw" width="900" height="1098" loading="lazy" decoding="async"
+             alt="Retrato en blanco y negro de Mikhail Carcausto sonriendo" data-i18n-alt="about.alt">
+      </picture>
+    </figure>
+    <div class="about__txt">
+      <span class="ey" data-i18n="me.ey">Sobre mí</span>
       <h2 data-i18n="me.h">Aprende de quien firma los contratos hoy</h2>
-      <p data-i18n="me.p1">Soy Mikhail Carcausto, Contracts Lead en minería de gran escala. Doce años en el ciclo completo de contratación entre Perú, Chile y Australia: sourcing, licitaciones, administración y reclamos.</p>
+      <p data-i18n="me.p1">Soy Mikhail Carcausto. Doce años en el ciclo completo de contratación minera, entre Perú, Chile y Australia: sourcing, licitaciones, administración y reclamos. Hoy lidero contratos prime en un proyecto de cobre de gran escala.</p>
       <p data-i18n="me.p2">No enseño desde un aula. Lo que te recomiendo lo estoy ejecutando esta semana, con auditores encima y un directorio esperando el reporte.</p>
+      <ul class="chips">
+        <li data-i18n="c1">Máster Supply Chain · Curtin University</li>
+        <li data-i18n="c2">Ing. Industrial · 6.º de 151</li>
+        <li>ISO 19011</li>
+        <li>McKinsey Forward</li>
+        <li>ES · EN · PT</li>
+      </ul>
+      <div class="gallery">
+        <figure>
+          <picture>
+            <source type="image/webp" srcset="assets/img/photos/perumin-415.webp">
+            <img src="assets/img/photos/perumin-415.jpg" width="415" height="948" loading="lazy" decoding="async"
+                 alt="Mikhail Carcausto exponiendo en el podio de PERUMIN 37" data-i18n-alt="g1.alt">
+          </picture>
+          <figcaption data-i18n="g1.cap">Expositor en PERUMIN 37</figcaption>
+        </figure>
+        <figure>
+          <picture>
+            <source type="image/webp" srcset="assets/img/photos/reunion-405.webp">
+            <img src="assets/img/photos/reunion-405.jpg" width="405" height="392" loading="lazy" decoding="async"
+                 alt="Mikhail Carcausto en una rueda de negocios con proveedores" data-i18n-alt="g2.alt">
+          </picture>
+          <figcaption data-i18n="g2.cap">Rueda de negocios con proveedores</figcaption>
+        </figure>
+      </div>
     </div>
-    <ul class="facts">
-      <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 9 L12 4 L21 9 L12 14 Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 11.5 V16 C7 17.5 9.5 19 12 19 C14.5 19 17 17.5 17 16 V11.5" stroke="currentColor" stroke-width="1.8"/></svg><div><b data-i18n="f1.h">Máster en Supply Chain Management</b><span data-i18n="f1.p">Curtin University, Australia · beca por mérito</span></div></li>
-      <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L14.6 8.3 L20.5 9.2 L16.2 13.3 L17.2 19.2 L12 16.4 L6.8 19.2 L7.8 13.3 L3.5 9.2 L9.4 8.3 Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><div><b data-i18n="f2.h">Ingeniero Industrial</b><span data-i18n="f2.p">UCSP · 6.º de 151, orador de promoción</span></div></li>
-      <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 L20 6.5 V12 C20 16.5 16.5 20 12 21 C7.5 20 4 16.5 4 12 V6.5 Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 12 L11 14.5 L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><b data-i18n="f3.h">Auditor ISO 19011 · McKinsey Forward</b><span data-i18n="f3.p">Certificaciones</span></div></li>
-      <li><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M3 12 H21 M12 3 C15 6.5 15 17.5 12 21 C9 17.5 9 6.5 12 3 Z" stroke="currentColor" stroke-width="1.8"/></svg><div><b data-i18n="f4.h">Español, inglés y portugués</b><span data-i18n="f4.p">Mentoría en los tres idiomas</span></div></li>
-    </ul>
   </div>
 </section>
 
@@ -259,8 +333,8 @@
 <section class="sec sec--cta" id="contacto">
   <div class="wrap">
     <div class="sec__head">
-      <span class="ey" data-i18n="ct.ey">Empecemos</span>
-      <h2 data-i18n="ct.h">Cuéntame en qué estás</h2>
+      <span class="ey" data-i18n="ct.ey">Contacto</span>
+      <h2 data-i18n="ct.h">Hablemos cuando estés listo</h2>
       <p class="sec__lead" data-i18n="ct.lead">Respondo personalmente, normalmente dentro de un día hábil.</p>
     </div>
 
@@ -276,13 +350,13 @@
             <input id="f-mail" name="email" type="email" autocomplete="email" required>
           </p>
           <p class="fld fld--full">
-            <label for="f-plan" data-i18n="ct.f.plan">Formato de interés</label>
+            <label for="f-plan" data-i18n="ct.f.plan">Me interesa</label>
             <select id="f-plan" name="plan">
               <option value="sesion" data-i18n="ct.o.sesion">Sesión puntual (90 min)</option>
               <option value="proceso" data-i18n="ct.o.proceso">Acompañamiento en proceso</option>
               <option value="programa" data-i18n="ct.o.programa">Programa de desarrollo (6 meses)</option>
-              <option value="nose" data-i18n="ct.o.nose">Aún no lo sé</option>
               <option value="empresa" data-i18n="ct.o.empresa">Consultoría para mi empresa</option>
+              <option value="nose" data-i18n="ct.o.nose">Aún no lo sé</option>
             </select>
           </p>
           <p class="fld fld--full">
@@ -303,7 +377,6 @@
       <aside class="direct">
         <h3 data-i18n="ct.direct">O directo</h3>
         <ul class="direct__list" id="channels"></ul>
-        <p class="biz"><span data-i18n="ct.biz">¿Representas a una minera o a un proveedor? También hago consultoría en contratos y abastecimiento. Elige </span><a href="#contacto" class="js-pick" data-plan="empresa" data-i18n="ct.bizlink">"Consultoría para mi empresa"</a><span data-i18n="ct.biz2"> en el formulario.</span></p>
       </aside>
     </div>
   </div>
@@ -321,6 +394,5 @@
     <span data-i18n="ftr.note">Sin cookies. Sin rastreadores.</span>
   </div>
 </footer>
-
 </body>
 </html>

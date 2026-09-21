@@ -110,6 +110,8 @@ window.EN = {
   "g1.cap": "Speaker at PERUMIN 37",
   "g2.alt": "Mikhail Carcausto at a business roundtable with suppliers",
   "g2.cap": "Business roundtable with suppliers",
+  "g3.alt": "Mikhail Carcausto at the entrance of a corporate building in Vancouver",
+  "g3.cap": "Vancouver, Canada",
 
   "qt.ey": "Testimonials",
   "qt.h": "What they say",
@@ -129,6 +131,9 @@ window.EN = {
   "ct.f.send": "Send",
   "ct.f.fine": "No mailing lists. Only used to reply to you.",
   "ct.direct": "Or direct",
+  "me.alt": "Mikhail Carcausto",
+  "me.role": "Contracts Superintendent · Mining",
+  "me.reply": "You talk to me directly.",
 
   "ftr.note": "No cookies. No trackers."
 };

@@ -135,13 +135,18 @@ a{color:inherit}
   -webkit-mask-image:linear-gradient(90deg,transparent 4%,rgba(0,0,0,.28) 34%,#000 66%);
           mask-image:linear-gradient(90deg,transparent 4%,rgba(0,0,0,.28) 34%,#000 66%);
 }
+/* A plain background image with the accent baked in (topo-a.svg): it is
+   rasterised once.  An animated SVG mask looked the same and cost ~1 s of
+   paint on a throttled phone, so only the palette previews use the mask. */
 .topo::before{
-  content:"";position:absolute;inset:-3%;background:rgb(var(--acc-rgb) / .3);
+  content:"";position:absolute;inset:-3%;opacity:.3;
+  background:url(../img/topo-a.svg) center/cover no-repeat;
+}
+:root[data-paleta] .topo::before{
+  background:rgb(var(--acc-rgb));
   -webkit-mask:url(../img/topo.svg) center/cover no-repeat;
           mask:url(../img/topo.svg) center/cover no-repeat;
-  animation:topo 50s ease-in-out infinite alternate;
 }
-@keyframes topo{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-1.5%,1%,0) scale(1.03)}}
 
 .hero__in{
   position:relative;display:grid;gap:clamp(34px,4vw,56px);align-items:center;
@@ -183,7 +188,6 @@ a{color:inherit}
   background:radial-gradient(closest-side,rgb(var(--acc-rgb) / .22),transparent 75%);filter:blur(6px);
 }
 .hero__fig picture,.hero__fig img{display:block;width:100%;height:auto}
-.hero__fig img{filter:drop-shadow(0 26px 30px rgba(0,0,0,.34))}
 .plate{
   position:absolute;left:50%;bottom:8%;transform:translateX(-50%);white-space:nowrap;text-align:center;
   padding:10px 18px;border-radius:12px;background:rgb(var(--bg0-rgb) / .64);border:1px solid var(--edge);
@@ -303,7 +307,10 @@ a{color:inherit}
 .about__photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;border-radius:20px;border:1px solid var(--edge)}
 .about__photo::after{            /* a patch of the pit's contour lines behind the frame */
   content:"";position:absolute;z-index:-1;right:-22px;bottom:-22px;width:64%;height:58%;border-radius:20px;
-  background:rgb(var(--acc-rgb) / .55);
+  opacity:.55;background:url(../img/topo-a.svg) 72% 46%/250% auto no-repeat;
+}
+:root[data-paleta] .about__photo::after{
+  background:rgb(var(--acc-rgb));
   -webkit-mask:url(../img/topo.svg) 72% 46%/250% auto no-repeat;
           mask:url(../img/topo.svg) 72% 46%/250% auto no-repeat;
 }
@@ -315,8 +322,8 @@ a{color:inherit}
   padding:7px 12px;border-radius:999px;background:var(--glass);border:1px solid var(--edge);
   font:600 11px/1 var(--f-disp);letter-spacing:.03em;color:var(--t2);
 }
-/* event photos are 300px sources: never shown wider than 210px, so they stay crisp */
-.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,210px));gap:12px;margin-top:24px}
+/* event photos are 300/420 px sources: never shown wider than 210px, so they stay crisp */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,210px));gap:12px;margin-top:24px}
 .gallery figure{margin:0}
 .gallery img{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:14px;border:1px solid var(--edge)}
 .gallery figcaption{margin-top:8px;font:600 11.5px/1.3 var(--f-disp);letter-spacing:.02em;color:var(--t3)}
@@ -333,7 +340,7 @@ a{color:inherit}
   -webkit-mask-image:radial-gradient(60% 70% at 88% 90%,#000,transparent 75%);
           mask-image:radial-gradient(60% 70% at 88% 90%,#000,transparent 75%);
 }
-.sec--cta .topo::before{background:rgb(var(--acc-rgb) / .18);animation:none}
+.sec--cta .topo::before{opacity:.18}
 .sec--cta .wrap{position:relative}
 .contact{display:grid;gap:clamp(20px,2.6vw,32px)}
 @media (min-width:940px){.contact{grid-template-columns:1.45fr .85fr;align-items:start}}
@@ -362,6 +369,13 @@ a{color:inherit}
 .req__msg.is-on{display:block}
 .req__msg.is-bad{color:#F87171}
 
+/* the face colleagues already know from Teams, at the moment of writing */
+.me{display:flex;align-items:center;gap:14px;margin:0 0 20px;padding:14px;border-radius:16px;background:var(--glass);border:1px solid var(--edge)}
+.me img{display:block;width:72px;height:72px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 2px rgb(var(--acc-rgb) / .7),0 0 0 5px rgb(var(--acc-rgb) / .14)}
+.me p{margin:0;line-height:1.3}
+.me b{display:block;font:700 16px/1.2 var(--f-disp)}
+.me span{display:block;margin-top:3px;font-size:12.5px;color:var(--t3)}
+.me em{display:block;margin-top:6px;font:600 12px/1.3 var(--f-body);font-style:normal;color:var(--ok)}
 .direct h3{margin:0 0 12px;font:700 10.5px/1 var(--f-disp);letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
 .direct__list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .direct__list a,.direct__list button{
@@ -424,6 +438,8 @@ a{color:inherit}
   .float span{font-size:10.5px}
   .tabs button{padding:0 14px;font-size:13px}
   .about__photo::after{right:-10px;bottom:-12px}
+  .gallery{gap:8px}
+  .gallery figcaption{font-size:10.5px}
 }
 @media (max-width:420px){
   .hdr{gap:10px}

@@ -24,7 +24,7 @@ window.EN = {
   "hero.cta1": "I'm a supply professional",
   "hero.cta2": "I represent a company",
   "hero.note": "A first 20-minute conversation to understand your situation.",
-  "hero.alt": "Mikhail Carcausto, contracts superintendent, arms crossed in front of a blue wall",
+  "hero.alt": "Mikhail Carcausto, contracts superintendent, arms crossed",
   "plate.role": "Contracts Superintendent · Mining",
   "kpi.1": "in prime contracts under my charge",
   "kpi.2": "tenders led",

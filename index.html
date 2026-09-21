@@ -6,14 +6,19 @@
 <title>MC Advisory — Mentoría y consultoría en contratos mineros</title>
 <meta name="description" content="Mentoría para profesionales de supply y consultoría para empresas mineras, con un superintendente de contratos en ejercicio. Menos teoría, más criterio.">
 <meta name="author" content="Mikhail Carcausto">
-<meta name="theme-color" content="#050E1F">
+<meta name="theme-color" content="#06110F">
+<!-- Palette preview for the owner: ?paleta=cobre|malaquita|cobalto (default: pátina). -->
+<script>(function(){try{var p=new URLSearchParams(location.search).get("paleta");if(p)document.documentElement.setAttribute("data-paleta",p)}catch(e){}})();</script>
 <link rel="canonical" href="https://mikhailcarcausto-rgb.github.io/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="MC Advisory — Menos teoría. Más criterio.">
 <meta property="og:description" content="Mentoría para profesionales de supply y consultoría para empresas mineras, con un superintendente de contratos en ejercicio.">
 <meta property="og:url" content="https://mikhailcarcausto-rgb.github.io/">
-<meta property="og:image" content="https://mikhailcarcausto-rgb.github.io/assets/img/og.png">
+<meta property="og:image" content="https://mikhailcarcausto-rgb.github.io/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MC Advisory — Menos teoría. Más criterio. Retrato de Mikhail Carcausto.">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -23,8 +28,8 @@
      then swaps. Measured on throttled mobile: 3.4 s -> ~2.3 s to first paint. -->
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&display=swap"></noscript>
-<link rel="preload" as="image" type="image/webp" fetchpriority="high"
-      imagesrcset="assets/img/photos/hero-600.webp 600w, assets/img/photos/hero-900.webp 900w"
+<link rel="preload" as="image" type="image/avif" fetchpriority="high"
+      imagesrcset="assets/img/photos/hero-600.avif 600w, assets/img/photos/hero-900.avif 900w"
       imagesizes="(min-width:960px) 440px, 90vw">
 <link rel="stylesheet" href="assets/css/style.css">
 <script src="assets/js/i18n.js" defer></script>
@@ -52,13 +57,13 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <linearGradient id="mcg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E2858"/><stop offset="1" stop-color="#050E1F"/></linearGradient>
-    <!-- The mark: a C ring holding an M that doubles as mine peaks. -->
+    <linearGradient id="mcg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--bg3)"/><stop offset="1" style="stop-color:var(--bg0)"/></linearGradient>
+    <!-- The mark: a C ring holding an M that doubles as mine peaks; colours follow the palette. -->
     <symbol id="mc" viewBox="0 0 48 48">
       <rect width="48" height="48" rx="11" fill="url(#mcg)"/>
       <rect x=".6" y=".6" width="46.8" height="46.8" rx="10.4" fill="none" stroke="rgba(255,255,255,.16)"/>
       <path d="M36.5 14.5 A15 15 0 1 0 36.5 33.5" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
-      <path d="M15 31 L20.5 19 L24.5 26 L28.5 19 L34 31" fill="none" stroke="#F37021" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M15 31 L20.5 19 L24.5 26 L28.5 19 L34 31" fill="none" style="stroke:var(--acc)" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
     </symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.5 14.1c-.2.7-1.3 1.3-1.9 1.3-.5 0-1.1.2-3.6-.8-3-1.3-5-4.4-5.1-4.6-.2-.2-1.3-1.7-1.3-3.2 0-1.5.8-2.3 1.1-2.6.3-.3.6-.4.8-.4h.6c.2 0 .5 0 .7.5l.9 2.2c.1.2.1.4 0 .6l-.4.6-.3.3c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.2.4-.2.6-.1l2.1 1c.3.1.5.2.5.4v.9Z"/></symbol>
     <symbol id="i-ok" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5 8.2l2 2 4-4.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -95,8 +100,7 @@
 
 <!-- ══ HERO ══ -->
 <section class="hero" id="top">
-  <div class="grid" aria-hidden="true"></div>
-  <span class="orb orb--1" aria-hidden="true"></span>
+  <div class="topo" aria-hidden="true"></div>
 
   <div class="wrap hero__in">
     <div class="hero__copy">
@@ -118,10 +122,11 @@
 
     <figure class="hero__fig">
       <picture>
+        <source type="image/avif" srcset="assets/img/photos/hero-600.avif 600w, assets/img/photos/hero-900.avif 900w" sizes="(min-width:960px) 440px, 90vw">
         <source type="image/webp" srcset="assets/img/photos/hero-600.webp 600w, assets/img/photos/hero-900.webp 900w" sizes="(min-width:960px) 440px, 90vw">
         <img src="assets/img/photos/hero-900.jpg" srcset="assets/img/photos/hero-600.jpg 600w, assets/img/photos/hero-900.jpg 900w"
              sizes="(min-width:960px) 440px, 90vw" width="900" height="1198" fetchpriority="high"
-             alt="Mikhail Carcausto, superintendente de contratos, de brazos cruzados frente a una pared azul" data-i18n-alt="hero.alt">
+             alt="Mikhail Carcausto, superintendente de contratos, de brazos cruzados" data-i18n-alt="hero.alt">
       </picture>
       <figcaption class="plate">
         <b>Mikhail Carcausto</b>
@@ -281,9 +286,9 @@
   <div class="wrap about">
     <figure class="about__photo">
       <picture>
-        <source type="image/webp" srcset="assets/img/photos/retrato-bn-600.webp 600w, assets/img/photos/retrato-bn-900.webp 900w" sizes="(min-width:900px) 420px, 90vw">
-        <img src="assets/img/photos/retrato-bn-900.jpg" srcset="assets/img/photos/retrato-bn-600.jpg 600w, assets/img/photos/retrato-bn-900.jpg 900w"
-             sizes="(min-width:900px) 420px, 90vw" width="900" height="1098" loading="lazy" decoding="async"
+        <source type="image/webp" srcset="assets/img/photos/sobre-400.webp 400w, assets/img/photos/sobre-532.webp 532w, assets/img/photos/sobre-800.webp 800w" sizes="(min-width:440px) 400px, 90vw">
+        <img src="assets/img/photos/sobre-532.jpg" srcset="assets/img/photos/sobre-400.jpg 400w, assets/img/photos/sobre-532.jpg 532w, assets/img/photos/sobre-800.jpg 800w"
+             sizes="(min-width:440px) 400px, 90vw" width="532" height="665" loading="lazy" decoding="async"
              alt="Retrato en blanco y negro de Mikhail Carcausto sonriendo" data-i18n-alt="about.alt">
       </picture>
     </figure>
@@ -302,16 +307,18 @@
       <div class="gallery">
         <figure>
           <picture>
-            <source type="image/webp" srcset="assets/img/photos/perumin-415.webp">
-            <img src="assets/img/photos/perumin-415.jpg" width="415" height="948" loading="lazy" decoding="async"
+            <source type="image/webp" srcset="assets/img/photos/perumin-300.webp 300w, assets/img/photos/perumin-420.webp 420w" sizes="(min-width:480px) 210px, 44vw">
+            <img src="assets/img/photos/perumin-300.jpg" srcset="assets/img/photos/perumin-300.jpg 300w, assets/img/photos/perumin-420.jpg 420w" sizes="(min-width:480px) 210px, 44vw"
+                 width="300" height="300" loading="lazy" decoding="async"
                  alt="Mikhail Carcausto exponiendo en el podio de PERUMIN 37" data-i18n-alt="g1.alt">
           </picture>
           <figcaption data-i18n="g1.cap">Expositor en PERUMIN 37</figcaption>
         </figure>
         <figure>
           <picture>
-            <source type="image/webp" srcset="assets/img/photos/reunion-405.webp">
-            <img src="assets/img/photos/reunion-405.jpg" width="405" height="392" loading="lazy" decoding="async"
+            <source type="image/webp" srcset="assets/img/photos/reunion-300.webp 300w, assets/img/photos/reunion-420.webp 420w" sizes="(min-width:480px) 210px, 44vw">
+            <img src="assets/img/photos/reunion-300.jpg" srcset="assets/img/photos/reunion-300.jpg 300w, assets/img/photos/reunion-420.jpg 420w" sizes="(min-width:480px) 210px, 44vw"
+                 width="300" height="300" loading="lazy" decoding="async"
                  alt="Mikhail Carcausto en una rueda de negocios con proveedores" data-i18n-alt="g2.alt">
           </picture>
           <figcaption data-i18n="g2.cap">Rueda de negocios con proveedores</figcaption>
@@ -331,6 +338,7 @@
 
 <!-- ══ CONTACTO ══ -->
 <section class="sec sec--cta" id="contacto">
+  <div class="topo" aria-hidden="true"></div>
   <div class="wrap">
     <div class="sec__head">
       <span class="ey" data-i18n="ct.ey">Contacto</span>

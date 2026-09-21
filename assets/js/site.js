@@ -391,7 +391,58 @@
     document.querySelectorAll("[data-count]").forEach(function (el) { numObs.observe(el); });
   }
 
+  /* ─────────────────────────────────────────────────────────
+     13 · PALETTE PREVIEW
+     Only for the owner while choosing: ?paleta=patina|cobre|
+     malaquita|cobalto shows a switcher; visitors never see it.
+     ───────────────────────────────────────────────────────── */
+  var PAL = [
+    // id, name, swatch ground, accent, theme-color
+    ["patina", "Pátina", "#0E221E", "#4CC9AE", "#06110F"],
+    ["cobre", "Cobre", "#1D1A18", "#D08A5A", "#0F0E0D"],
+    ["malaquita", "Malaquita", "#0D2419", "#D6B56E", "#05110C"],
+    ["cobalto", "Cobalto", "#191A21", "#5B8CFF", "#0B0B0E"]
+  ];
+  function palettePreview() {
+    var root = document.documentElement;
+    if (!root.hasAttribute("data-paleta")) return;
+    var bar = document.createElement("div");
+    bar.className = "pal";
+    bar.setAttribute("role", "group");
+    bar.setAttribute("aria-label", "Paleta");
+    var label = document.createElement("span");
+    bar.appendChild(label);
+    function apply(p) {
+      root.setAttribute("data-paleta", p[0]);
+      label.textContent = p[1];
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = p[4];
+      bar.querySelectorAll("button").forEach(function (b) {
+        b.setAttribute("aria-pressed", b.dataset.p === p[0] ? "true" : "false");
+      });
+      try {
+        var u = new URL(location.href);
+        u.searchParams.set("paleta", p[0]);
+        history.replaceState(null, "", u);
+      } catch (e) {}
+    }
+    PAL.forEach(function (p) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.dataset.p = p[0];
+      b.setAttribute("aria-label", p[1]);
+      b.title = p[1];
+      b.style.background = "linear-gradient(135deg," + p[2] + " 50%," + p[3] + " 50%)";
+      b.addEventListener("click", function () { apply(p); });
+      bar.appendChild(b);
+    });
+    document.body.appendChild(bar);
+    var cur = PAL.filter(function (p) { return p[0] === root.getAttribute("data-paleta"); })[0] || PAL[0];
+    apply(cur);
+  }
+
   /* ─── go ─── */
   renderQuotes();
   setLang(guess);
+  palettePreview();
 })();

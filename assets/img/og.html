@@ -1,49 +1,46 @@
 <!DOCTYPE html>
-<!-- Source for og.png. Open at 1200x630 and screenshot. Not linked from the site. -->
+<!-- Source for og.jpg: open at 1200x630 (DPR 1), screenshot, save as JPEG q88. Not linked from the site. -->
 <html lang="es"><head><meta charset="utf-8">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;box-sizing:border-box}
   body{width:1200px;height:630px;overflow:hidden;color:#fff;font-family:"Space Grotesk",system-ui,sans-serif;position:relative;
     background:
-      radial-gradient(circle at 18% 8%,rgba(80,120,255,.14) 0%,transparent 36%),
-      radial-gradient(circle at 86% 92%,rgba(243,112,33,.30) 0%,transparent 42%),
-      linear-gradient(180deg,#050E1F 0%,#0A1F47 65%,#0E2858 100%)}
-  .sl{position:absolute;top:-120px;left:-170px;width:420px;height:760px;opacity:.6;filter:drop-shadow(0 0 8px rgba(243,112,33,.5));
-    background:
-      linear-gradient(118deg,transparent 28%,#F37021 28%,#F37021 28.35%,transparent 28.35%),
-      linear-gradient(118deg,transparent 36%,#F37021 36%,#F37021 36.35%,transparent 36.35%),
-      linear-gradient(118deg,transparent 44%,#F37021 44%,#F37021 44.35%,transparent 44.35%),
-      linear-gradient(118deg,transparent 52%,#F37021 52%,#F37021 52.35%,transparent 52.35%)}
-  .g{position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.05) 1px,transparent 1px);
-    background-size:60px 60px;-webkit-mask-image:radial-gradient(ellipse 90% 80% at 42% 55%,#000 30%,transparent 80%)}
-  .in{position:absolute;inset:0;padding:64px 470px 60px 110px;display:flex;flex-direction:column}
-  .ph{position:absolute;right:40px;bottom:0;width:430px;height:590px;border-radius:26px 26px 0 0;overflow:hidden;
-      -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%)}
-  .ph img{width:100%;height:100%;object-fit:cover;object-position:center 12%}
-  .glow{position:absolute;right:60px;bottom:80px;width:420px;height:420px;border-radius:50%;
-        background:radial-gradient(closest-side,rgba(243,112,33,.45),transparent 72%);filter:blur(10px)}
+      radial-gradient(46% 70% at 80% 52%,rgba(76,201,174,.16) 0%,transparent 72%),
+      radial-gradient(30% 40% at 6% 4%,rgba(217,149,106,.08) 0%,transparent 70%),
+      linear-gradient(180deg,#06110F 0%,#0A1916 55%,#0E221E 100%)}
+  .topo{position:absolute;inset:0;
+    -webkit-mask-image:linear-gradient(90deg,transparent 8%,rgba(0,0,0,.3) 38%,#000 66%)}
+  .topo::before{content:"";position:absolute;inset:-6% -2% -6% 8%;background:rgba(76,201,174,.32);
+    -webkit-mask:url(topo.svg) center/cover no-repeat}
+  .in{position:absolute;inset:0;padding:62px 520px 58px 84px;display:flex;flex-direction:column}
+  .arch{position:absolute;right:92px;top:132px;width:356px;bottom:0;border-radius:999px 999px 0 0;
+    background:radial-gradient(90% 55% at 50% 0%,rgba(76,201,174,.30),transparent 72%),linear-gradient(180deg,rgba(76,201,174,.12),rgba(76,201,174,.03) 70%);
+    border:1px solid rgba(76,201,174,.4);border-bottom:0;
+    -webkit-mask-image:linear-gradient(180deg,#000 60%,transparent 96%)}
+  .ph{position:absolute;right:54px;top:28px;width:432px}
+  .ph img{display:block;width:100%;height:auto;filter:drop-shadow(0 24px 28px rgba(0,0,0,.35))}
   .top{display:flex;align-items:center;gap:16px}
   .top svg{width:60px;height:60px}
   .top b{font-weight:700;font-size:32px}
   .top b span{font-weight:500;color:rgba(255,255,255,.62)}
-  .ey{margin-top:auto;align-self:flex-start;padding:9px 18px;border-radius:999px;border:1.6px solid #F37021;
+  .ey{margin-top:auto;align-self:flex-start;padding:9px 18px;border-radius:999px;border:1.6px solid rgba(76,201,174,.85);
       font-weight:700;font-size:15px;letter-spacing:.18em;text-transform:uppercase;background:rgba(255,255,255,.04)}
   h1{margin-top:22px;font-weight:700;font-size:84px;line-height:.98;letter-spacing:-.03em}
-  h1 em{display:block;font-style:normal;color:#F37021}
+  h1 em{display:block;font-style:normal;color:#4CC9AE}
   .bar{margin-top:30px;display:flex;gap:14px}
   .kt{padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18)}
   .kt b{display:block;font-weight:700;font-size:28px}
   .kt span{display:block;margin-top:3px;font-size:15px;color:rgba(255,255,255,.66);font-family:system-ui,sans-serif}
 </style></head>
-<body><div class="sl"></div><div class="g"></div><div class="glow"></div>
-<div class="ph"><img src="photos/hero-900.jpg" alt=""></div>
+<body><div class="topo"></div><div class="arch"></div>
+<div class="ph"><img src="photos/hero-900.webp" alt=""></div>
 <div class="in">
   <div class="top">
-    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0E2858"/><stop offset="1" stop-color="#050E1F"/></linearGradient></defs>
+    <svg viewBox="0 0 48 48"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#132D28"/><stop offset="1" stop-color="#06110F"/></linearGradient></defs>
       <rect width="48" height="48" rx="11" fill="url(#g)"/><rect x=".6" y=".6" width="46.8" height="46.8" rx="10.4" fill="none" stroke="rgba(255,255,255,.2)"/>
       <path d="M36.5 14.5 A15 15 0 1 0 36.5 33.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/>
-      <path d="M15 31 L20.5 19 L24.5 26 L28.5 19 L34 31" fill="none" stroke="#F37021" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      <path d="M15 31 L20.5 19 L24.5 26 L28.5 19 L34 31" fill="none" stroke="#4CC9AE" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/></svg>
     <b>MC <span>Advisory</span></b>
   </div>
   <p class="ey">Mentoría y consultoría · Supply minero</p>

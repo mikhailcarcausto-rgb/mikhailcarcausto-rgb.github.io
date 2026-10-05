@@ -173,21 +173,17 @@ a{color:inherit}
 
 /* portrait: a cut-out standing in an arched adit; the head breaks the arch */
 .hero__fig{position:relative;margin:0;justify-self:center;width:min(100%,440px);isolation:isolate}
-.hero__fig::before{
-  content:"";position:absolute;z-index:-1;left:7%;right:7%;top:15%;bottom:0;
-  border-radius:999px 999px 0 0;
-  background:
-    radial-gradient(90% 55% at 50% 0%,rgb(var(--acc-rgb) / .30),transparent 72%),
-    linear-gradient(180deg,rgb(var(--acc-rgb) / .12),rgb(var(--acc-rgb) / .03) 70%);
-  border:1px solid rgb(var(--acc-rgb) / .38);border-bottom:0;
-  -webkit-mask-image:linear-gradient(180deg,#000 58%,transparent 94%);
-          mask-image:linear-gradient(180deg,#000 58%,transparent 94%);
-}
-.hero__fig::after{               /* soft light on the wall behind the head */
-  content:"";position:absolute;z-index:-1;left:18%;right:18%;top:4%;height:44%;border-radius:50%;
-  background:radial-gradient(closest-side,rgb(var(--acc-rgb) / .22),transparent 75%);filter:blur(6px);
+.hero__fig::before{              /* halo around the arch, in the accent */
+  content:"";position:absolute;z-index:-1;inset:-6% -8% -4% -8%;
+  background:radial-gradient(60% 48% at 50% 36%,rgb(var(--acc-rgb) / .26),transparent 72%);
+  filter:blur(10px);
 }
 .hero__fig picture,.hero__fig img{display:block;width:100%;height:auto}
+.hero__fig img{             /* the photograph sits inside the adit arch */
+  border-radius:999px 999px 24px 24px;
+  border:1px solid rgb(var(--acc-rgb) / .38);
+  box-shadow:0 40px 90px -45px rgba(0,0,0,.85);
+}
 .plate{
   position:absolute;left:50%;bottom:8%;transform:translateX(-50%);white-space:nowrap;text-align:center;
   padding:10px 18px;border-radius:12px;background:rgb(var(--bg0-rgb) / .64);border:1px solid var(--edge);
@@ -195,6 +191,7 @@ a{color:inherit}
 }
 .plate b{display:block;font:700 15.5px/1.2 var(--f-disp)}
 .plate span{display:block;margin-top:2px;font-size:11.5px;color:var(--t3)}
+.plate em{display:block;margin-top:5px;font:700 10px/1 var(--f-disp);font-style:normal;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
 .float{list-style:none;margin:0;padding:0}
 .float li{
   position:absolute;padding:11px 14px;border-radius:12px;min-width:132px;
@@ -203,9 +200,10 @@ a{color:inherit}
 }
 .float b{display:block;font:700 20px/1.05 var(--f-disp);font-variant-numeric:tabular-nums}
 .float span{display:block;margin-top:4px;font-size:11px;line-height:1.3;color:var(--t3)}
-.float__a{left:-12%;top:17%}
-.float__b{right:-10%;top:38%;animation-delay:-2s}
-.float__c{left:-8%;top:60%;animation-delay:-4s}
+/* the speaker stands in the left third of the photo: tiles keep clear of him */
+.float__a{left:-12%;top:7%}
+.float__b{right:-10%;top:36%;animation-delay:-2s}
+.float__c{right:-8%;top:62%;animation-delay:-4s}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
 /* ── trust strip ────────────────────────────────────────── */
@@ -323,7 +321,7 @@ a{color:inherit}
   font:600 11px/1 var(--f-disp);letter-spacing:.03em;color:var(--t2);
 }
 /* event photos are 300/420 px sources: never shown wider than 210px, so they stay crisp */
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,210px));gap:12px;margin-top:24px}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,210px));gap:12px;margin-top:24px}
 .gallery figure{margin:0}
 .gallery img{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:14px;border:1px solid var(--edge)}
 .gallery figcaption{margin-top:8px;font:600 11.5px/1.3 var(--f-disp);letter-spacing:.02em;color:var(--t3)}
@@ -416,7 +414,7 @@ a{color:inherit}
 
 /* ── narrow screens ─────────────────────────────────────── */
 @media (max-width:960px){
-  .float__a{left:-4%}.float__b{right:-4%}.float__c{left:-2%}
+  .float__a{left:-4%}.float__b{right:-4%}.float__c{right:-2%}
   /* stacked layout: the contour lines gather around the portrait, not behind the copy */
   .hero .topo{
     -webkit-mask-image:linear-gradient(180deg,transparent 34%,rgba(0,0,0,.35) 58%,#000 82%);
